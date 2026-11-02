@@ -1,0 +1,84 @@
+diff --git a/i18n/locales/tg.json b/i18n/locales/tg.json
+new file mode 100644
+index 0000000000000000000000000000000000000000..b6069dc13915fa99e7203c9d237ef83ed2a64757
+--- /dev/null
++++ b/i18n/locales/tg.json
+@@ -0,0 +1,78 @@
++{
++  "common": {
++    "or": "ё",
++    "error": {
++      "title": "Саҳифа ёфт нашуд",
++      "description": "Бубахшед, саҳифаи дархостшуда ёфт нашуд."
++    }
++  },
++  "docs": {
++    "copy": {
++      "page": "Нусхабардории саҳифа",
++      "link": "Нусхабардории пайванди Markdown",
++      "view": "Дидан ҳамчун Markdown",
++      "gpt": "Кушодан дар ChatGPT",
++      "claude": "Кушодан дар Claude",
++      "more": "Имконоти дигар"
++    },
++    "links": "Ҷомеа",
++    "toc": "Дар ин саҳифа",
++    "menu": "Меню",
++    "report": "Хабар додан дар бораи мушкил",
++    "edit": "Таҳрири ин саҳифа"
++  },
++  "logo": {
++    "copyLogo": "Copy logo",
++    "copyWordmark": "Copy wordmark",
++    "downloadLogo": "Download logo",
++    "downloadWordmark": "Download wordmark",
++    "brandAssets": "Brand assets",
++    "logoCopied": "Logo copied",
++    "wordmarkCopied": "Wordmark copied",
++    "logoDownloaded": "Logo downloaded",
++    "wordmarkDownloaded": "Wordmark downloaded",
++    "copyLogoFailed": "Failed to copy logo",
++    "copyWordmarkFailed": "Failed to copy wordmark"
++  },
++  "assistant": {
++    "title": "Ask AI",
++    "placeholder": "Ask a question...",
++    "tooltip": "Ask AI a question",
++    "tryAsking": "Try asking a question",
++    "askAnything": "Ask anything...",
++    "clearChat": "Clear chat",
++    "close": "Close",
++    "expand": "Expand",
++    "collapse": "Collapse",
++    "askMeAnything": "Ask anything",
++    "askMeAnythingDescription": "Get help navigating the documentation, understanding concepts, and finding answers.",
++    "faq": "FAQ",
++    "chatCleared": "Chat is cleared on refresh",
++    "lineBreak": "Line break",
++    "explainWithAi": "Explain with AI",
++    "toolListPages": "Listed documentation pages",
++    "toolReadPage": "Read",
++    "tools": {
++      "searching": "Searching",
++      "searched": "Searched",
++      "reading": "Reading",
++      "read": "Read",
++      "finding": "Finding",
++      "found": "Found",
++      "opening": "Opening",
++      "opened": "Opened",
++      "generating": "Generating",
++      "generated": "Generated",
++      "creating": "Creating",
++      "created": "Created"
++    },
++    "loading": {
++      "thinking": "Thinking...",
++      "searching": "Searching the documentation",
++      "reading": "Reading through the docs",
++      "analyzing": "Analyzing the content",
++      "finding": "Finding the best answer",
++      "finished": "Sources used"
++    }
++  }
++}
