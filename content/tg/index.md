@@ -5,14 +5,8 @@ seo:
 ---
 
 <!--
-  Ҳамаи корт-ҳо ҳоло ба муқаддима мебаранд: саҳифаҳои нақшҳо ҳанӯз нестанд.
-  Роҳҳои пешбинишуда (ҳангоми навишти саҳифаҳо `to`-ро иваз кунед):
-  - Соҳиб: /tg/getting-started/introduction, /tg/business/create-business, /tg/business/add-point,
-    /tg/warehouse/add-items, /tg/prices/set-prices, /tg/team/invite-staff, /tg/reports/profit
-  - Кассир: /tg/cashier/open-shift, /tg/cashier/make-sale, /tg/cashier/take-payment, /tg/cashier/receipts,
-    /tg/cashier/refund, /tg/cashier/close-shift
-  - Анбордор: /tg/warehouse/add-items, /tg/warehouse/suppliers, /tg/warehouse/receive-goods,
-    /tg/warehouse/move-goods, /tg/warehouse/write-off, /tg/warehouse/check-stock
+  Role cards: owner, cashier and stock keeper link to their own short lists of pages in getting-started.
+  Add the Team pages (/tg/team/invite-staff) to the owner list when they are merged.
 -->
 
 ::u-page-hero
@@ -102,7 +96,7 @@ Partha ба шумо кӯмак мекунад, ки мағоза, анбор ё
   icon: i-lucide-briefcase-business
   title: Ман соҳиби тиҷорат ҳастам
   description: "Тиҷорат, нуқтаҳо, нархҳо ва кормандони худро танзим кунед, баъд фоидаро пайгирӣ намоед."
-  to: /tg/getting-started/introduction
+  to: /tg/getting-started/for-owners
   ---
   :::
 
@@ -111,7 +105,7 @@ Partha ба шумо кӯмак мекунад, ки мағоза, анбор ё
   icon: i-lucide-shopping-cart
   title: Ман дар касса кор мекунам
   description: "Навбати корӣро кушоед, фурӯшед, пул қабул кунед, пулро баргардонед ва навбати корӣро бандед."
-  to: /tg/getting-started/introduction
+  to: /tg/getting-started/for-cashiers
   ---
   :::
 
@@ -120,7 +114,7 @@ Partha ба шумо кӯмак мекунад, ки мағоза, анбор ё
   icon: i-lucide-package
   title: Ман барои анбор масъулам
   description: "Мол қабул кунед, интиқол ва баровард кунед ва бақияи молро санҷед."
-  to: /tg/getting-started/introduction
+  to: /tg/getting-started/for-stock-keepers
   ---
   :::
 ::

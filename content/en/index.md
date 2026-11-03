@@ -5,14 +5,8 @@ seo:
 ---
 
 <!--
-  The role cards below all point to the introduction for now, because the role pages do not exist yet.
-  Planned paths, in order (replace `to` when the pages are written):
-  - Owner: /en/getting-started/introduction, /en/business/create-business, /en/business/add-point,
-    /en/warehouse/add-items, /en/prices/set-prices, /en/team/invite-staff, /en/reports/profit
-  - Cashier: /en/cashier/open-shift, /en/cashier/make-sale, /en/cashier/take-payment, /en/cashier/receipts,
-    /en/cashier/refund, /en/cashier/close-shift
-  - Stock keeper: /en/warehouse/add-items, /en/warehouse/suppliers, /en/warehouse/receive-goods,
-    /en/warehouse/move-goods, /en/warehouse/write-off, /en/warehouse/check-stock
+  Role cards: owner, cashier and stock keeper link to their own short lists of pages in getting-started.
+  Add the Team pages (/en/team/invite-staff) to the owner list when they are merged.
 -->
 
 ::u-page-hero
@@ -102,7 +96,7 @@ Pick the card that sounds like you. We will show you the pages that matter most.
   icon: i-lucide-briefcase-business
   title: I own the business
   description: "Set up your business, shops and warehouses, prices and team, then follow your profit."
-  to: /en/getting-started/introduction
+  to: /en/getting-started/for-owners
   ---
   :::
 
@@ -111,7 +105,7 @@ Pick the card that sounds like you. We will show you the pages that matter most.
   icon: i-lucide-shopping-cart
   title: I work at the till
   description: "Open your shift, sell, take payment, give a refund and close your shift."
-  to: /en/getting-started/introduction
+  to: /en/getting-started/for-cashiers
   ---
   :::
 
@@ -120,7 +114,7 @@ Pick the card that sounds like you. We will show you the pages that matter most.
   icon: i-lucide-package
   title: I look after the stock
   description: "Receive deliveries, move and write off goods and check what is left."
-  to: /en/getting-started/introduction
+  to: /en/getting-started/for-stock-keepers
   ---
   :::
 ::
