@@ -24,6 +24,11 @@ export const glossary: Record<string, Record<GlossaryLang, string>> = {
     ru: 'Остатки — это товар, который у вас есть в наличии, отдельно по каждой точке.',
     tg: 'Бақияи мол — молест, ки шумо дар даст доред, барои ҳар нуқта алоҳида ҳисоб карда мешавад.',
   },
+  cost: {
+    en: 'Cost is what a product cost you to get, for example the price you paid the supplier. Partha uses it to show your profit.',
+    ru: 'Себестоимость — это сколько товар обошёлся вам, например цена, которую вы заплатили поставщику. По ней Partha показывает вашу прибыль.',
+    tg: 'Таннарх — ин ҳамон аст, ки мол ба шумо чанд пул афтод, масалан нархе, ки ба таъминкунанда додаед. Partha аз рӯи он фоидаи шуморо нишон медиҳад.',
+  },
 }
 
 export const glossaryLink: Record<GlossaryLang, string> = {
