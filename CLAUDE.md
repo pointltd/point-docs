@@ -204,7 +204,9 @@ to add them"), the first visit of a screen, complex forms, error messages, setti
 - Docs paths are a contract with the app. Once a page is linked from the app, never rename or move it without adding a
   redirect in `public/_redirects` and updating the app in the same change.
 - Link to a section anchor (`#if-something-went-wrong`) only for headings that are stable. Write explicit anchors for
-  them: `## If something went wrong {#troubleshooting}`.
+  them as an empty span on the line before the heading: `[]{#troubleshooting}` (the `## Title {#id}` form shows the
+  `{#id}` as text in Docus). Skip it when the heading's own generated id is already the one you want, to avoid a
+  duplicate id.
 - The app opens `https://docs.partha.co/<app language>/<path>`, with `<app language>` from the user's current app
   language. Keep the list of app-linked paths in one place in the app (a single helper or constants file) so a check
   can verify that each one exists in all three languages.
