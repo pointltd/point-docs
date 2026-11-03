@@ -32,7 +32,7 @@ export const glossary: Record<string, Record<GlossaryLang, string>> = {
   shift: {
     en: 'A shift is your working time at the till: you open it with the cash in the drawer and close it with the cash counted.',
     ru: 'Смена — это ваше рабочее время на кассе: вы открываете её с наличными в кассе и закрываете, пересчитав наличные.',
-    tg: 'Навбат — вақти кори шумо дар касса: шумо онро бо пули дар қуттӣ буда мекушоед ва бо шумурдани пул мебандед.',
+    tg: 'Навбати корӣ — вақти кори шумо дар касса: шумо онро бо пули дар қуттӣ буда мекушоед ва бо шумурдани пул мебандед.',
   },
 }
 
