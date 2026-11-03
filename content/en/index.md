@@ -1,13 +1,13 @@
 ---
 seo:
   title: Partha Documentation
-  description: "Learn how to run your shop with Partha: stock, prices, sales at the till and your money, in one place."
+  description: "Learn how to run your business with Partha: stock, prices, sales at the till and your money, in one place."
 ---
 
 <!--
   The role cards below all point to the introduction for now, because the role pages do not exist yet.
   Planned paths, in order (replace `to` when the pages are written):
-  - Owner: /en/getting-started/introduction, /en/business/create-business, /en/business/add-store,
+  - Owner: /en/getting-started/introduction, /en/business/create-business, /en/business/add-point,
     /en/warehouse/add-items, /en/prices/set-prices, /en/team/invite-staff, /en/reports/profit
   - Cashier: /en/cashier/open-shift, /en/cashier/make-sale, /en/cashier/take-payment, /en/cashier/receipts,
     /en/cashier/refund, /en/cashier/close-shift
@@ -20,7 +20,7 @@ seo:
 Partha Documentation
 
 #description
-Partha helps you run your shop: keep track of your goods, sell at the till and see how much you earn.
+Partha helps you run your shop, warehouse or small business: keep track of your goods, sell at the till and see how much you earn.
 
 #links
   :::u-button
@@ -42,8 +42,8 @@ What you can do with Partha
   :::u-page-feature
   ---
   icon: i-lucide-store
-  title: Business and stores
-  description: "Create your business and add each place where you work. Every place keeps its own stock."
+  title: Business and points
+  description: "Create your business and add each place where you work: a shop, a warehouse or a cafe. Every place keeps its own stock."
   ---
   :::
 
@@ -101,7 +101,7 @@ Pick the card that sounds like you. We will show you the pages that matter most.
   ---
   icon: i-lucide-briefcase-business
   title: I own the business
-  description: "Set up your business, stores, prices and team, then follow your profit."
+  description: "Set up your business, shops and warehouses, prices and team, then follow your profit."
   to: /en/getting-started/introduction
   ---
   :::

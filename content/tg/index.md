@@ -1,13 +1,13 @@
 ---
 seo:
   title: Ҳуҷҷатҳои Partha
-  description: "Бифаҳмед, ки чӣ тавр мағозаи худро дар Partha пеш баред: анбор, нархҳо, фурӯш дар касса ва пул дар як ҷо."
+  description: "Бифаҳмед, ки чӣ тавр тиҷорати худро дар Partha пеш баред: анбор, нархҳо, фурӯш дар касса ва пул дар як ҷо."
 ---
 
 <!--
   Ҳамаи корт-ҳо ҳоло ба муқаддима мебаранд: саҳифаҳои нақшҳо ҳанӯз нестанд.
   Роҳҳои пешбинишуда (ҳангоми навишти саҳифаҳо `to`-ро иваз кунед):
-  - Соҳиб: /tg/getting-started/introduction, /tg/business/create-business, /tg/business/add-store,
+  - Соҳиб: /tg/getting-started/introduction, /tg/business/create-business, /tg/business/add-point,
     /tg/warehouse/add-items, /tg/prices/set-prices, /tg/team/invite-staff, /tg/reports/profit
   - Кассир: /tg/cashier/open-shift, /tg/cashier/make-sale, /tg/cashier/take-payment, /tg/cashier/receipts,
     /tg/cashier/refund, /tg/cashier/close-shift
@@ -20,7 +20,7 @@ seo:
 Ҳуҷҷатҳои Partha
 
 #description
-Partha ба шумо кӯмак мекунад, ки мағозаатонро пеш баред: молро ҳисоб кунед, дар касса бифурӯшед ва бубинед, ки чӣ қадар фоида мегиред.
+Partha ба шумо кӯмак мекунад, ки мағоза, анбор ё тиҷорати хурди худро пеш баред: молро ҳисоб кунед, дар касса бифурӯшед ва бубинед, ки чӣ қадар фоида мегиред.
 
 #links
   :::u-button
@@ -43,7 +43,7 @@ Partha ба шумо кӯмак мекунад, ки мағозаатонро п
   ---
   icon: i-lucide-store
   title: Тиҷорат ва нуқтаҳо
-  description: "Тиҷорати худро созед ва ҳар ҷойеро, ки дар он кор мекунед, илова кунед. Ҳар нуқта анбори худро дорад."
+  description: "Тиҷорати худро созед ва ҳар ҷойеро, ки дар он кор мекунед, илова кунед: мағоза, анбор ё қаҳвахона. Ҳар нуқта анбори худро дорад."
   ---
   :::
 
