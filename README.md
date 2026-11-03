@@ -28,9 +28,15 @@ pnpm check --app-links path/to/docs-links.json      # also check the paths the a
 ```
 
 `--app-links` takes a JSON list of paths without the language prefix, for example
-`["warehouse/add-items", "business/add-point#apps"]`, and checks each one (and its anchor) in all three languages.
+`["warehouse/add-items", "business/add-point#apps"]`, or a map of names to such paths (the app's
+`docs-links.json`), and checks each one (and its anchor) in all three languages.
 
-CI runs `pnpm check --build` on every pull request (`.github/workflows/checks.yaml`).
+CI runs `pnpm check --build` on every pull request (`.github/workflows/checks.yaml`). It also downloads the app's
+list of docs links (`src/layers/base/app/docs-links.json` on `main` in `pointltd/partha-js`) and checks it, so a PR
+here cannot rename or remove a page the app links to. `partha-js` is private, so this needs the repository secret
+`PARTHA_JS_READ_TOKEN`: a fine-grained token with read-only **Contents** access to `pointltd/partha-js` only. Without
+the secret (for example on a PR from a fork) the step prints a warning and skips this one check. The other direction
+is checked in `partha-js`: its unit tests check every linked path against a checkout of this repo.
 
 ## Deployment
 

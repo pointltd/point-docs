@@ -30,4 +30,22 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - run: pnpm check --build
+      # The paths the app links to (see README, "Checks"). partha-js is private, so this needs a read-only token.
+      - name: Download the app's docs links
+        env:
+          GH_TOKEN: ${{ secrets.PARTHA_JS_READ_TOKEN }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::warning::PARTHA_JS_READ_TOKEN is not set, so the app's docs links are not checked"
+            exit 0
+          fi
+          gh api repos/pointltd/partha-js/contents/src/layers/base/app/docs-links.json \
+            -H 'Accept: application/vnd.github.raw' > "$RUNNER_TEMP/app-links.json"
+
+      - name: Check docs
+        run: |
+          if [ -f "$RUNNER_TEMP/app-links.json" ]; then
+            pnpm check --build --app-links "$RUNNER_TEMP/app-links.json"
+          else
+            pnpm check --build
+          fi
