@@ -1,123 +1,34 @@
-# Docus i18n Starter
+# Partha documentation
 
-> A beautiful, internationalized starter for creating multi-language documentation with Docus
-
-This is the i18n Docus starter template that provides everything you need to build beautiful, multi-language documentation sites with Markdown and Vue components.
-
-## ✨ Features
-
-- 🌍 **Internationalization** - Native i18n support for multi-language docs
-- 🎨 **Beautiful Design** - Clean, modern documentation theme
-- 📱 **Responsive** - Mobile-first responsive design  
-- 🌙 **Dark Mode** - Built-in dark/light mode support
-- 🔍 **Search** - Full-text search functionality per language
-- 📝 **Markdown Enhanced** - Extended markdown with custom components
-- 🎨 **Customizable** - Easy theming and brand customization
-- ⚡ **Fast** - Optimized for performance with Nuxt 4
-- 🔧 **TypeScript** - Full TypeScript support
-
-## 🚀 Quick Start
+The public documentation of Partha at https://docs.partha.co, built with [Docus](https://docus.dev) (Nuxt).
+English is the source language; Russian (`ru`) and Tajik (`tg`) sit next to it in `content/`.
 
 ```bash
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
+pnpm install
+pnpm dev        # http://localhost:3000
+pnpm generate   # static site in .output/public
 ```
 
-Your multilingual documentation site will be running at `http://localhost:3000`
+## Deployment
 
-## 🌍 Languages
+The site is a static build served by nginx on Cloud Run (Google Cloud, project `point-prod`).
+A push to `main` builds the image, pushes it to Artifact Registry and applies `infrastructure/terraform/gcp/prod`
+(the Cloud Run service and the `docs.partha.co` domain mapping). See `.github/workflows/deploy.yaml`.
 
-This starter comes pre-configured with:
-- 🇺🇸 **English** (`en`) - Default language
-- 🇫🇷 **Français** (`fr`) - French translation
+The platform pieces it needs (runtime service account, deploy rights, DNS zone) live in `partha-global-ops`.
+The `prod` environment of this repo needs the variables `GCP_PROJECT_ID`, `GCP_REGION`, `GCP_WIF_PROVIDER` and
+`GCP_DEPLOY_SA`.
 
-## 📁 Project Structure
-
-```
-my-docs/
-├── content/              # Your markdown content
-│   ├── en/              # English content
-│   │   ├── index.md     # English homepage
-│   │   └── docs/        # English documentation
-│   └── fr/              # French content
-│       ├── index.md     # French homepage
-│       └── docs/        # French documentation
-├── public/              # Static assets
-├── nuxt.config.ts       # Nuxt configuration with i18n setup
-└── package.json         # Dependencies and scripts
-```
-
-### Content Structure
-
-The content is organized by language, making it easy to manage translations:
-
-```
-content/
-├── en/                   # English content
-│   ├── index.md
-│   ├── 1.getting-started/
-│   │   ├── installation.md
-│   │   └── configuration.md
-│   └── 2.essentials/
-│       ├── markdown.md
-│       └── components.md
-└── fr/                   # French content
-    ├── index.md
-    ├── 1.getting-started/
-    │   ├── installation.md
-    │   └── configuration.md
-    └── 2.essentials/
-        ├── markdown.md
-        └── components.md
-```
-
-## 🔗 URL Structure
-
-The i18n starter generates URLs with language prefixes:
-
-- English: `/en/getting-started/installation`
-- French: `/fr/getting-started/installation`
-- Default locale fallback: `/getting-started/installation` (redirects to English)
-
-## ⚡ Built with
-
-This starter comes pre-configured with:
-
-- [Nuxt 4](https://nuxt.com) - The web framework
-- [Nuxt Content](https://content.nuxt.com/) - File-based CMS
-- [Nuxt i18n](https://i18n.nuxt.com/) - Internationalization
-- [Nuxt UI](https://ui.nuxt.com) - UI components
-- [Nuxt Image](https://image.nuxt.com/) - Optimized images
-- [Tailwind CSS 4](https://tailwindcss.com/) - Utility-first CSS
-- [Docus Layer](https://www.npmjs.com/package/docus) - Documentation theme
-
-## 📖 Documentation
-
-For detailed documentation on customizing your Docus project, visit the [Docus Documentation](https://docus.dev)
-
-### 🤖 AI Assistant Skill
-
-Get started quickly with Docus by adding specialized knowledge to your AI assistant (Cursor, Claude, etc.):
+Run the production image locally:
 
 ```bash
-npx skills add nuxt-content/docus
+docker build -t partha-docs .
+docker run --rm -p 8080:8080 partha-docs   # http://localhost:8080
 ```
 
-This skill helps you create documentation faster by providing your AI assistant with best practices, MDC component usage, ready-to-use templates, writing guidelines, and configuration tips for Docus. Perfect for quickly scaffolding new documentation projects.
+## Notes
 
-## 🚀 Deployment
-
-Build for production:
-
-```bash
-npm run build
-```
-
-The built files will be in the `.output` directory, ready for deployment to any hosting provider that supports Node.js.
-
-## 📄 License
-
-[MIT License](https://opensource.org/licenses/MIT) 
+- `nitro.preset` is forced to `static` in `nuxt.config.ts` so a host never switches the build to a server bundle.
+- Docus has no Tajik interface strings; `patches/docus.patch` adds them, and `app/components/LanguageSelect.vue`
+  maps `tg` to the Tajikistan flag.
+- Keep `pnpm-lock.yaml` in sync with the `packageManager` pin; the image installs with `--frozen-lockfile`.
