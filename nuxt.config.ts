@@ -6,6 +6,7 @@ export default defineNuxtConfig({
   },
   // Always output plain static files, even on Cloudflare (which would pick a Worker preset)
   nitro: { preset: 'static' },
+  css: ['~/assets/css/main.css'],
   modules: ['@nuxtjs/i18n'],
   i18n: {
     defaultLocale: 'en',

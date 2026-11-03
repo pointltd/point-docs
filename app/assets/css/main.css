@@ -1,0 +1,5 @@
+/* Docus puts 3rem between the page text and the previous/next links, on top of the margin of the last block
+   (a card group, a note). That leaves a big empty band; keep a smaller, even gap. */
+main [class*="space-y-12"] > :not(:last-child) {
+  margin-bottom: 1rem;
+}

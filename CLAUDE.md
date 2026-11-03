@@ -45,6 +45,15 @@ Write so that a person with no knowledge of software, accounting or law understa
 - Money and accounting topics follow IFRS, like the product. Explain the idea in plain words first; name the standard
   only in a short note for accountants ("This follows IAS 2."). Posted documents are never edited or deleted in
   Partha; the docs show how to correct them with a reversal.
+- **Name the product as a thing, not a person.** Partha is "the app" (ru: приложение, tg: барнома). In Russian it is
+  neuter ("оно", "в нём"); never "она" or "система". Avoid the pronoun in headings and descriptions: repeat "Partha"
+  or the noun. Tajik has no gender, but write "барнома" or "Partha" instead of a bare "он", which can also mean a
+  person.
+- **Not only shops.** A point can be a shop, a warehouse or a cafe, and a warehouse may never sell. Do not write as if
+  every reader runs a shop: say "business" or "point", and give shop and warehouse examples. Cash desk steps are for
+  points that sell; say so where it matters.
+- **Say "point" for a place of business.** The app's word is **point** (ru: точка, tg: нуқта): a shop, a store, a
+  warehouse or a cafe. Write it with the term component (below) in running text; do not call it "store" or "branch".
 - No jargon from our code: no "endpoint", "module", "GRN", "point_id". Say "store" or the name the app uses.
 
 ## Research before writing
@@ -105,6 +114,8 @@ Every section uses these page types:
 3. **"How it works" pages**, only where people get confused: how stock value is counted, why a posted document cannot
    be edited and how a reversal fixes it, what a refund does to stock. Money explanations follow IFRS, in plain words.
 4. **Reference**, only where a table beats text: the roles and permissions table, the fields of a complex form.
+- Put a `description` in double quotes when it has a colon: an unquoted colon breaks the YAML, the page returns a 500
+  and `pnpm generate` still finishes. After a build, check its output for `[500]`.
 - Every page has front matter: `title`, `description` (one sentence, shown in search and link previews) and
   `navigation.icon` (a Lucide icon, `i-lucide-*`).
 - Keep a section to about 10 pages. Split it when it grows past that.
@@ -177,6 +188,16 @@ Rules:
 - Tables for comparisons (roles and what they can do, plans). Keep them narrow enough for a phone.
 - Check every new page in the dev server (`pnpm dev`) in light and dark mode and at phone width.
 
+## Words that need an explanation
+
+A word a beginner may not know gets a hoverable explanation: `:term[points]{id="point"}`. The text in `[]` is what the
+reader sees, in any case or form; `id` is the entry in `app/utils/glossary.ts` (short text for en, ru and tg). Every
+term also has a full entry on the glossary page of each language (`/<lang>/help/glossary`) under the same `id`, written
+at the same time. Use the term component for each use of the word in running text; not in headings, in the sentence
+that defines it, or in front-matter and component props (they cannot hold a component).
+
+The page footer does not show "Edit this page", "Report an issue" or a GitHub link (`app/app.config.ts`).
+
 ## Links from the app
 
 The app (`partha-js`) links to the docs wherever a user may need help: empty states ("You have no items yet. Learn how
@@ -185,7 +206,9 @@ to add them"), the first visit of a screen, complex forms, error messages, setti
 - Docs paths are a contract with the app. Once a page is linked from the app, never rename or move it without adding a
   redirect in `public/_redirects` and updating the app in the same change.
 - Link to a section anchor (`#if-something-went-wrong`) only for headings that are stable. Write explicit anchors for
-  them: `## If something went wrong {#troubleshooting}`.
+  them as an empty span on the line before the heading: `[]{#troubleshooting}` (the `## Title {#id}` form shows the
+  `{#id}` as text in Docus). Skip it when the heading's own generated id is already the one you want, to avoid a
+  duplicate id.
 - The app opens `https://docs.partha.co/<app language>/<path>`, with `<app language>` from the user's current app
   language. Keep the list of app-linked paths in one place in the app (a single helper or constants file) so a check
   can verify that each one exists in all three languages.
