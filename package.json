@@ -1,5 +1,6 @@
 {
   "name": "point-docs",
+  "packageManager": "pnpm@12.16.1",
   "scripts": {
     "dev": "nuxt dev",
     "build": "nuxt build",
