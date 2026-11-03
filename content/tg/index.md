@@ -1,15 +1,15 @@
 ---
 seo:
-  title: Ҳуҷҷатҳои Point
-  description: Бифаҳмед, ки чӣ тавр бо Point тиҷорати худро идора кунед.
+  title: Ҳуҷҷатҳо
+  description: Бифаҳмед, ки чӣ тавр бо Partha тиҷорати худро идора кунед.
 ---
 
 ::u-page-hero
 #title
-Ҳуҷҷатҳои Point
+Ҳуҷҷатҳои Partha
 
 #description
-Бифаҳмед, ки чӣ тавр бо Point тиҷорати худро идора кунед.
+Бифаҳмед, ки чӣ тавр бо Partha тиҷорати худро идора кунед.
 
 #links
   :::u-button

@@ -1,15 +1,15 @@
 ---
 seo:
-  title: Point Documentation
-  description: Learn how to run your business with Point.
+  title: Documentation
+  description: Learn how to run your business with Partha.
 ---
 
 ::u-page-hero
 #title
-Point Documentation
+Partha Documentation
 
 #description
-Learn how to run your business with Point.
+Learn how to run your business with Partha.
 
 #links
   :::u-button

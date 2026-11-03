@@ -1,15 +1,15 @@
 ---
 seo:
-  title: Документация Point
-  description: Узнайте, как управлять бизнесом с помощью Point.
+  title: Документация
+  description: Узнайте, как управлять бизнесом с помощью Partha.
 ---
 
 ::u-page-hero
 #title
-Документация Point
+Документация Partha
 
 #description
-Узнайте, как управлять бизнесом с помощью Point.
+Узнайте, как управлять бизнесом с помощью Partha.
 
 #links
   :::u-button
