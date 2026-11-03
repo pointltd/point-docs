@@ -14,6 +14,16 @@ export const glossary: Record<string, Record<GlossaryLang, string>> = {
     ru: 'НДС (налог на добавленную стоимость) — налог, который входит в цену товара. Если ваш бизнес платит НДС, Partha показывает его на чеках.',
     tg: 'ААИ (андоз аз арзиши иловашуда) — андозест, ки ба нархи мол дохил мешавад. Агар тиҷорати шумо ААИ мепардозад, Partha онро дар чекҳо нишон медиҳад.',
   },
+  draft: {
+    en: 'A draft is a document you have started but not finished. It changes nothing in your stock until you complete it.',
+    ru: 'Черновик — это документ, который вы начали, но не закончили. Пока вы его не проведёте, остатки не меняются.',
+    tg: 'Пешнавис ҳуҷҷатест, ки шумо оғоз кардаед, вале ба охир нарасондаед. То анҷом додани он бақияи мол тағйир намеёбад.',
+  },
+  stock: {
+    en: 'Stock is the goods you have on hand, counted for each point.',
+    ru: 'Остатки — это товар, который у вас есть в наличии, отдельно по каждой точке.',
+    tg: 'Бақияи мол — молест, ки шумо дар даст доред, барои ҳар нуқта алоҳида ҳисоб карда мешавад.',
+  },
 }
 
 export const glossaryLink: Record<GlossaryLang, string> = {
