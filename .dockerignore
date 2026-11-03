@@ -1,0 +1,8 @@
+.git
+.github
+.nuxt
+.output
+.data
+node_modules
+infrastructure/terraform
+*.md

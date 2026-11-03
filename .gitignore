@@ -34,4 +34,6 @@ logs
 
 #VSC
 .history
-.wrangler
+
+# Terraform
+.terraform/
