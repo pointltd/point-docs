@@ -6,7 +6,6 @@ seo:
 
 <!--
   Role cards: owner, cashier and stock keeper link to their own short lists of pages in getting-started.
-  Add the Team pages (/en/team/invite-staff) to the owner list when they are merged.
 -->
 
 ::u-page-hero
