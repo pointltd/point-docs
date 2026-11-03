@@ -2,7 +2,7 @@
 // Checks that keep broken docs from reaching the live site. See README ("Checks").
 //
 //   node scripts/check.mjs                       content checks (fast, no build)
-//   node scripts/check.mjs --app-links FILE      also check a JSON list of paths the app links to
+//   node scripts/check.mjs --app-links FILE      also check the paths the app links to (JSON list or map)
 //   node scripts/check.mjs --build               also run `pnpm generate` and check what it prerendered
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
 import { spawnSync } from 'node:child_process'
@@ -173,7 +173,9 @@ if (appLinks) {
   } catch (e) {
     fail(`cannot read ${appLinks}: ${e.message}`)
   }
-  if (!Array.isArray(list) || list.some(p => typeof p !== 'string')) fail(`${appLinks} must be a JSON list of paths`)
+  // The app's docs-links.json maps a page name to its path; a plain list of paths works too.
+  if (list && typeof list === 'object' && !Array.isArray(list)) list = Object.values(list)
+  if (!Array.isArray(list) || list.some(p => typeof p !== 'string')) fail(`${appLinks} must be a JSON list or map of paths`)
   for (const entry of list) {
     const [pathPart, hash] = entry.split('#')
     const route = pathPart.replace(/^\/+|\/+$/g, '')
