@@ -155,11 +155,27 @@ function checkTarget(lang, where, target) {
   report(where, `"${target}" is not a page and there is no such file in public/`)
 }
 
+// `::screenshot{src="warehouse/add-items-1"}` needs both themes: public/images/<lang>/<src>.{light,dark}.webp.
+const SCREENSHOT = /::screenshot\{([^}]*)\}/g
+
 for (const lang of LANGS) {
   for (const [, { file, text }] of pages[lang]) {
     const where = `content/${lang}/${file}`
     const body = text.replace(/```[\s\S]*?```/g, '').replace(/`[^`\n]*`/g, '')
-    for (const m of body.matchAll(REFERENCE)) checkTarget(lang, where, m[1] ?? m[2])
+    for (const m of body.matchAll(SCREENSHOT)) {
+      const src = m[1].match(/\bsrc="([^"]+)"/)?.[1]
+      const alt = m[1].match(/\balt="([^"]*)"/)?.[1]
+      if (!src) {
+        report(where, `::screenshot without src`)
+        continue
+      }
+      if (!alt?.trim()) report(where, `::screenshot "${src}" has no alt text`)
+      for (const theme of ['light', 'dark']) {
+        const path = join(PUBLIC, 'images', lang, `${src}.${theme}.webp`)
+        if (!existsSync(path)) report(where, `::screenshot "${src}": missing public/images/${lang}/${src}.${theme}.webp`)
+      }
+    }
+    for (const m of body.replace(SCREENSHOT, '').matchAll(REFERENCE)) checkTarget(lang, where, m[1] ?? m[2])
   }
 }
 
