@@ -29,6 +29,11 @@ export const glossary: Record<string, Record<GlossaryLang, string>> = {
     ru: 'Себестоимость — это сколько товар обошёлся вам, например цена, которую вы заплатили поставщику. По ней Partha показывает вашу прибыль.',
     tg: 'Таннарх — ин ҳамон аст, ки мол ба шумо чанд пул афтод, масалан нархе, ки ба таъминкунанда додаед. Partha аз рӯи он фоидаи шуморо нишон медиҳад.',
   },
+  shift: {
+    en: 'A shift is your working time at the till: you open it with the cash in the drawer and close it with the cash counted.',
+    ru: 'Смена — это ваше рабочее время на кассе: вы открываете её с наличными в кассе и закрываете, пересчитав наличные.',
+    tg: 'Навбат — вақти кори шумо дар касса: шумо онро бо пули дар қуттӣ буда мекушоед ва бо шумурдани пул мебандед.',
+  },
 }
 
 export const glossaryLink: Record<GlossaryLang, string> = {
