@@ -5,14 +5,8 @@ seo:
 ---
 
 <!--
-  Все карточки пока ведут на введение: страниц для ролей ещё нет.
-  Планируемые пути (заменить `to`, когда страницы будут написаны):
-  - Владелец: /ru/getting-started/introduction, /ru/business/create-business, /ru/business/add-point,
-    /ru/warehouse/add-items, /ru/prices/set-prices, /ru/team/invite-staff, /ru/reports/profit
-  - Кассир: /ru/cashier/open-shift, /ru/cashier/make-sale, /ru/cashier/take-payment, /ru/cashier/receipts,
-    /ru/cashier/refund, /ru/cashier/close-shift
-  - Кладовщик: /ru/warehouse/add-items, /ru/warehouse/suppliers, /ru/warehouse/receive-goods,
-    /ru/warehouse/move-goods, /ru/warehouse/write-off, /ru/warehouse/check-stock
+  Role cards: owner, cashier and stock keeper link to their own short lists of pages in getting-started.
+  Add the Team pages (/ru/team/invite-staff) to the owner list when they are merged.
 -->
 
 ::u-page-hero
@@ -102,7 +96,7 @@ Partha помогает вести магазин, склад или небол�
   icon: i-lucide-briefcase-business
   title: Я владелец бизнеса
   description: "Настройте бизнес, магазины и склады, цены и команду, а потом следите за прибылью."
-  to: /ru/getting-started/introduction
+  to: /ru/getting-started/for-owners
   ---
   :::
 
@@ -111,7 +105,7 @@ Partha помогает вести магазин, склад или небол�
   icon: i-lucide-shopping-cart
   title: Я работаю на кассе
   description: "Откройте смену, продавайте, принимайте оплату, делайте возврат и закрывайте смену."
-  to: /ru/getting-started/introduction
+  to: /ru/getting-started/for-cashiers
   ---
   :::
 
@@ -120,7 +114,7 @@ Partha помогает вести магазин, склад или небол�
   icon: i-lucide-package
   title: Я отвечаю за склад
   description: "Принимайте поставки, перемещайте и списывайте товар, проверяйте остатки."
-  to: /ru/getting-started/introduction
+  to: /ru/getting-started/for-stock-keepers
   ---
   :::
 ::
