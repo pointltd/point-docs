@@ -233,7 +233,7 @@ them as described when you work on them.
 - **Search and AI.** Docus search covers all three languages. Docus generates `llms.txt` (a list of pages that AI
   assistants can read); keep it enabled and complete. A later "Ask AI" assistant *(planned)* must answer only from the
   docs, in the reader's language, and link the pages it used.
-- **Automatic checks** *(planned)*. The build fails when a page exists in one language but not the others, when a link
+- **Automatic checks** *(built: `pnpm check`, see README)*. The build fails when a page exists in one language but not the others, when a link
   or image is broken, or when a path the app links to (from the app's docs-links helper) does not exist in all three
   languages. Run them in CI for every PR in `point-docs` and `partha-js`.
 - **Screenshot automation** *(planned)*. A Playwright script in `partha-js`, next to the end-to-end tests, opens the
