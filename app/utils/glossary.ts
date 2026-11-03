@@ -9,6 +9,11 @@ export const glossary: Record<string, Record<GlossaryLang, string>> = {
     ru: 'Точка — это одно место, где вы работаете: магазин, склад или кафе. У каждой точки свой склад, своя касса и свои продажи.',
     tg: 'Нуқта — як ҷоест, ки шумо дар он кор мекунед: мағоза, анбор ё қаҳвахона. Ҳар нуқта анбор, касса ва фурӯшҳои худро дорад.',
   },
+  vat: {
+    en: 'VAT (value added tax) is a tax that is part of the price of goods. If your business charges VAT, Partha shows it on receipts.',
+    ru: 'НДС (налог на добавленную стоимость) — налог, который входит в цену товара. Если ваш бизнес платит НДС, Partha показывает его на чеках.',
+    tg: 'ААИ (андоз аз арзиши иловашуда) — андозест, ки ба нархи мол дохил мешавад. Агар тиҷорати шумо ААИ мепардозад, Partha онро дар чекҳо нишон медиҳад.',
+  },
 }
 
 export const glossaryLink: Record<GlossaryLang, string> = {
