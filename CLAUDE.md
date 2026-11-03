@@ -45,6 +45,12 @@ Write so that a person with no knowledge of software, accounting or law understa
 - Money and accounting topics follow IFRS, like the product. Explain the idea in plain words first; name the standard
   only in a short note for accountants ("This follows IAS 2."). Posted documents are never edited or deleted in
   Partha; the docs show how to correct them with a reversal.
+- **Name the product as a thing, not a person.** Partha is "the app" (ru: приложение, tg: барнома). In Russian it is
+  neuter ("оно", "в нём"); never "она" or "система". Avoid the pronoun in headings and descriptions: repeat "Partha"
+  or the noun. Tajik has no gender, but write "барнома" or "Partha" instead of a bare "он", which can also mean a
+  person.
+- **Say "point" for a place of business.** The app's word is **point** (ru: точка, tg: нуқта): a shop, a store, a
+  warehouse or a cafe. Write it with the term component (below) in running text; do not call it "store" or "branch".
 - No jargon from our code: no "endpoint", "module", "GRN", "point_id". Say "store" or the name the app uses.
 
 ## Research before writing
@@ -176,6 +182,16 @@ Rules:
 - Use diagrams (Mermaid) for flows such as "order → receipt → stock → report", with labels in the page's language.
 - Tables for comparisons (roles and what they can do, plans). Keep them narrow enough for a phone.
 - Check every new page in the dev server (`pnpm dev`) in light and dark mode and at phone width.
+
+## Words that need an explanation
+
+A word a beginner may not know gets a hoverable explanation: `:term[points]{id="point"}`. The text in `[]` is what the
+reader sees, in any case or form; `id` is the entry in `app/utils/glossary.ts` (short text for en, ru and tg). Every
+term also has a full entry on the glossary page of each language (`/<lang>/help/glossary`) under the same `id`, written
+at the same time. Use the term component for each use of the word in running text; not in headings, in the sentence
+that defines it, or in front-matter and component props (they cannot hold a component).
+
+The page footer does not show "Edit this page", "Report an issue" or a GitHub link (`app/app.config.ts`).
 
 ## Links from the app
 
