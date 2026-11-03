@@ -49,6 +49,9 @@ Write so that a person with no knowledge of software, accounting or law understa
   neuter ("оно", "в нём"); never "она" or "система". Avoid the pronoun in headings and descriptions: repeat "Partha"
   or the noun. Tajik has no gender, but write "барнома" or "Partha" instead of a bare "он", which can also mean a
   person.
+- **Not only shops.** A point can be a shop, a warehouse or a cafe, and a warehouse may never sell. Do not write as if
+  every reader runs a shop: say "business" or "point", and give shop and warehouse examples. Cash desk steps are for
+  points that sell; say so where it matters.
 - **Say "point" for a place of business.** The app's word is **point** (ru: точка, tg: нуқта): a shop, a store, a
   warehouse or a cafe. Write it with the term component (below) in running text; do not call it "store" or "branch".
 - No jargon from our code: no "endpoint", "module", "GRN", "point_id". Say "store" or the name the app uses.
