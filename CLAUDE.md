@@ -114,6 +114,8 @@ Every section uses these page types:
 3. **"How it works" pages**, only where people get confused: how stock value is counted, why a posted document cannot
    be edited and how a reversal fixes it, what a refund does to stock. Money explanations follow IFRS, in plain words.
 4. **Reference**, only where a table beats text: the roles and permissions table, the fields of a complex form.
+- Put a `description` in double quotes when it has a colon: an unquoted colon breaks the YAML, the page returns a 500
+  and `pnpm generate` still finishes. After a build, check its output for `[500]`.
 - Every page has front matter: `title`, `description` (one sentence, shown in search and link previews) and
   `navigation.icon` (a Lucide icon, `i-lucide-*`).
 - Keep a section to about 10 pages. Split it when it grows past that.
