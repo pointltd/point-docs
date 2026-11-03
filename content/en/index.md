@@ -1,15 +1,26 @@
 ---
 seo:
-  title: Documentation
-  description: Learn how to run your business with Partha.
+  title: Partha Documentation
+  description: "Learn how to run your shop with Partha: stock, prices, sales at the till and your money, in one place."
 ---
+
+<!--
+  The role cards below all point to the introduction for now, because the role pages do not exist yet.
+  Planned paths, in order (replace `to` when the pages are written):
+  - Owner: /en/getting-started/introduction, /en/business/create-business, /en/business/add-store,
+    /en/warehouse/add-items, /en/prices/set-prices, /en/team/invite-staff, /en/reports/profit
+  - Cashier: /en/cashier/open-shift, /en/cashier/make-sale, /en/cashier/take-payment, /en/cashier/receipts,
+    /en/cashier/refund, /en/cashier/close-shift
+  - Stock keeper: /en/warehouse/add-items, /en/warehouse/suppliers, /en/warehouse/receive-goods,
+    /en/warehouse/move-goods, /en/warehouse/write-off, /en/warehouse/check-stock
+-->
 
 ::u-page-hero
 #title
 Partha Documentation
 
 #description
-Learn how to run your business with Partha.
+Partha helps you run your shop: keep track of your goods, sell at the till and see how much you earn.
 
 #links
   :::u-button
@@ -20,5 +31,96 @@ Learn how to run your business with Partha.
   trailing-icon: i-lucide-arrow-right
   ---
   Get started
+  :::
+::
+
+::u-page-section
+#title
+What you can do with Partha
+
+#features
+  :::u-page-feature
+  ---
+  icon: i-lucide-store
+  title: Business and stores
+  description: "Create your business and add each place where you work. Every place keeps its own stock."
+  ---
+  :::
+
+  :::u-page-feature
+  ---
+  icon: i-lucide-package
+  title: Stock
+  description: "Add your products, record deliveries from suppliers, write off damaged goods and move goods between places."
+  ---
+  :::
+
+  :::u-page-feature
+  ---
+  icon: i-lucide-tag
+  title: Prices
+  description: "Set the price of each product and see right away if you would sell it for less than it cost you."
+  ---
+  :::
+
+  :::u-page-feature
+  ---
+  icon: i-lucide-shopping-cart
+  title: Selling at the till
+  description: "Open a shift, ring up sales, take cash or card, print receipts and refund a sale."
+  ---
+  :::
+
+  :::u-page-feature
+  ---
+  icon: i-lucide-chart-no-axes-combined
+  title: Money and reports
+  description: "See today's sales, what your stock is worth and how much you earned."
+  ---
+  :::
+
+  :::u-page-feature
+  ---
+  icon: i-lucide-users
+  title: Team
+  description: "Invite your colleagues and choose what each of them can do."
+  ---
+  :::
+::
+
+::u-page-section
+#title
+What do you do?
+
+#description
+Pick the card that sounds like you. We will show you the pages that matter most.
+
+
+#features
+  :::u-page-card
+  ---
+  icon: i-lucide-briefcase-business
+  title: I own the business
+  description: "Set up your business, stores, prices and team, then follow your profit."
+  to: /en/getting-started/introduction
+  ---
+  :::
+
+  :::u-page-card
+  ---
+  icon: i-lucide-shopping-cart
+  title: I work at the till
+  description: "Open your shift, sell, take payment, give a refund and close your shift."
+  to: /en/getting-started/introduction
+  ---
+  :::
+
+  :::u-page-card
+  ---
+  icon: i-lucide-package
+  title: I look after the stock
+  description: "Receive deliveries, move and write off goods and check what is left."
+  to: /en/getting-started/introduction
+  ---
   :::
 ::
