@@ -180,9 +180,12 @@ Rules:
 
 - Use components to help the reader, not to decorate. At most one callout in a row; never stack three warnings.
 - Screenshots: one per important step, in the language of the page, taken from the demo business (see below), never
-  from real customer data. Store them in `public/images/<lang>/<section>/<page>-<step>.webp`, about 1600 px wide,
-  cropped to the part that matters, with a useful `alt` text in that language. Highlight the button to press with one
-  consistent marker style. Show the phone layout where cashiers use a phone.
+  from real customer data. Store them in `public/images/<lang>/<section>/<page>-<step>.{light,dark}.webp` and show
+  them with `::screenshot{src="<section>/<page>-<step>" alt="…"}`, with a useful `alt` text in that language.
+  Always use the desktop layout, the cash desk included, never the phone layout. Take them at twice the pixel
+  density (a crop of 800 css px becomes a 1600 px image) and save them losslessly, cropped to the part that matters;
+  the component never shows an image wider than half its pixels, so it stays sharp. Highlight the button to press
+  with one consistent marker style. All of this is what the screenshot script does (below).
 - Use short GIFs or videos only for moves a picture cannot show (drag and drop, scanning).
 - Use diagrams (Mermaid) for flows such as "order → receipt → stock → report", with labels in the page's language.
 - Tables for comparisons (roles and what they can do, plans). Keep them narrow enough for a phone.
@@ -236,11 +239,11 @@ them as described when you work on them.
 - **Automatic checks** *(built: `pnpm check`, see README)*. The build fails when a page exists in one language but not the others, when a link
   or image is broken, or when a path the app links to (from the app's docs-links helper) does not exist in all three
   languages. Run them in CI for every PR in `point-docs` and `partha-js`.
-- **Screenshot automation** *(planned)*. A Playwright script in `partha-js`, next to the end-to-end tests, opens the
-  demo business in each language and phone/desktop size, and saves the screenshots straight into
-  `point-docs/public/images/<lang>/...` under the names the pages use. When a screen changes, rerun the script
-  instead of taking screenshots by hand. Take one by hand only when the script cannot reach that state, and note it in
-  the script.
+- **Screenshot automation** *(built: `partha-js/src/tests/docs-shots`, see its README)*. A Playwright script opens the
+  sample businesses on the live app in each language and both themes, at desktop size, and saves the screenshots
+  straight into `point-docs/public/images/<lang>/...` under the names the pages use. When a screen changes, rerun the
+  script for that shot instead of taking screenshots by hand. Take one by hand only when the script cannot reach that
+  state, and note it in the script.
 - **Demo business** *(planned)*. A ready-made business with realistic but fake data (stores, items, suppliers,
   staff, sales over a few weeks), one per market so currency and taxes look right. It is the only source for
   screenshots, and new users can open it to try Partha without risk to their own data.
