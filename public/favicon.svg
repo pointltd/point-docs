@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5756e4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- The Partha mark: the lucide "circle-dot" icon in the brand colour (primary 500, oklch(0.54 0.21 277)). -->
+  <!-- This is the single source. `pnpm run brand` makes every favicon and app icon from it. -->
+  <circle cx="12" cy="12" r="10"/>
+  <circle cx="12" cy="12" r="1"/>
+</svg>

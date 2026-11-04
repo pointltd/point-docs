@@ -6,6 +6,15 @@ export default defineNuxtConfig({
   },
   // Always output plain static files, even on Cloudflare (which would pick a Worker preset)
   nitro: { preset: 'static' },
+  // The Partha mark (the same circle with a dot as in the app). Made from partha-js/src/brand/logo.svg.
+  app: {
+    head: {
+      link: [
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico', sizes: '48x48' },
+      ],
+    },
+  },
   css: ['~/assets/css/main.css'],
   modules: ['@nuxtjs/i18n'],
   i18n: {
