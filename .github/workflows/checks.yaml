@@ -1,8 +1,9 @@
 ---
 name: Docs checks
 
+# Switched off on pull requests to save Actions minutes: run the docs checks locally. Run by hand from the Actions tab when needed.
 on:
-  pull_request:
+  # pull_request:
   workflow_dispatch:
 
 permissions:

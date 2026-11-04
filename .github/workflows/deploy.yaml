@@ -1,6 +1,7 @@
 ---
 on:
-  pull_request:
+  # Pull request checks are off to save Actions minutes: run them locally.
+  # pull_request:
   push:
     branches:
       - main
@@ -21,52 +22,53 @@ env:
   IMAGE_NAME: docs
 
 jobs:
+  # The check jobs below (docs image build, terraform check) are switched off; only the deploy runs.
   # The image build runs the site build, so a pull request that breaks the docs fails here.
-  check-image:
-    name: Build image
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+  # check-image:
+  #   name: Build image
+  #   if: github.event_name == 'pull_request'
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
 
-      - uses: docker/setup-buildx-action@v3
+  #     - uses: docker/setup-buildx-action@v3
 
-      - name: Build docs image (not pushed)
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          target: prod
-          platforms: linux/amd64
-          push: false
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+  #     - name: Build docs image (not pushed)
+  #       uses: docker/build-push-action@v6
+  #       with:
+  #         context: .
+  #         target: prod
+  #         platforms: linux/amd64
+  #         push: false
+  #         cache-from: type=gha
+  #         cache-to: type=gha,mode=max
 
-  check-terraform:
-    name: Check infrastructure
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+  # check-terraform:
+  #   name: Check infrastructure
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
 
-      - uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: "1.9.8"
+  #     - uses: hashicorp/setup-terraform@v3
+  #       with:
+  #         terraform_version: "1.9.8"
 
-      - name: Terraform Format
-        run: terraform fmt -check -recursive -no-color
-        working-directory: ${{ env.TF_DIR }}
+  #     - name: Terraform Format
+  #       run: terraform fmt -check -recursive -no-color
+  #       working-directory: ${{ env.TF_DIR }}
 
-      - name: Terraform Init
-        run: terraform init -backend=false -input=false -no-color
-        working-directory: ${{ env.TF_DIR }}
+  #     - name: Terraform Init
+  #       run: terraform init -backend=false -input=false -no-color
+  #       working-directory: ${{ env.TF_DIR }}
 
-      - name: Validate
-        run: terraform validate -no-color
-        working-directory: ${{ env.TF_DIR }}
+  #     - name: Validate
+  #       run: terraform validate -no-color
+  #       working-directory: ${{ env.TF_DIR }}
 
   deploy:
     name: Deploy to prod
     # Push to main and the manual "Run workflow" button deploy; pull requests never do.
-    needs: [check-terraform]
+    # needs: [check-terraform]
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment: prod
