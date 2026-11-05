@@ -6,9 +6,10 @@
 //   node scripts/check.mjs --build               also run `pnpm generate` and check what it prerendered
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
 import { spawnSync } from 'node:child_process'
-import { join, relative } from 'node:path'
+import { join, relative, sep } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-const ROOT = new URL('..', import.meta.url).pathname
+const ROOT = fileURLToPath(new URL('..', import.meta.url))
 const CONTENT = join(ROOT, 'content')
 const PUBLIC = join(ROOT, 'public')
 const LANGS = ['en', 'ru', 'tg']
@@ -49,7 +50,7 @@ function routeOf(relPath) {
 const files = {} // lang -> Set of paths relative to content/<lang>
 for (const lang of LANGS) {
   files[lang] = new Set(
-    existsSync(join(CONTENT, lang)) ? walk(join(CONTENT, lang)).map(p => relative(join(CONTENT, lang), p)) : [],
+    existsSync(join(CONTENT, lang)) ? walk(join(CONTENT, lang)).map(p => relative(join(CONTENT, lang), p).split(sep).join('/')) : [],
   )
 }
 for (const lang of LANGS) {
@@ -206,7 +207,7 @@ if (appLinks) {
 // ---- 5. Build: every page must prerender ----
 
 if (flag('--build')) {
-  const build = spawnSync('pnpm', ['generate'], { cwd: ROOT, encoding: 'utf8', maxBuffer: 1 << 28 })
+  const build = spawnSync('pnpm', ['generate'], { cwd: ROOT, shell: process.platform === 'win32', encoding: 'utf8', maxBuffer: 1 << 28 })
   const log = `${build.stdout}\n${build.stderr}`
   if (build.status !== 0) {
     console.error(log.split('\n').slice(-40).join('\n'))
