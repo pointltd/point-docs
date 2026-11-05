@@ -34,6 +34,26 @@ export const glossary: Record<string, Record<GlossaryLang, string>> = {
     ru: 'Смена — это ваше рабочее время на кассе: вы открываете её с наличными в кассе и закрываете, пересчитав наличные.',
     tg: 'Навбати корӣ — вақти кори шумо дар касса: шумо онро бо пули дар қуттӣ буда мекушоед ва бо шумурдани пул мебандед.',
   },
+  'stock-count': {
+    en: 'A stock count is when you count the goods that are really at a point and compare them with what Partha has.',
+    ru: 'Инвентаризация — это когда вы пересчитываете товар, который на самом деле есть в точке, и сравниваете с тем, что записано в Partha.',
+    tg: 'Баҳисобгирии мол ин аст, ки шумо моли воқеан дар нуқта бударо ҳисоб мекунед ва бо он чи дар Partha навишта шудааст, муқоиса мекунед.',
+  },
+  difference: {
+    en: 'A difference is how much a count differs from Partha: fewer goods is a shortage, more goods is a surplus.',
+    ru: 'Расхождение — это насколько подсчёт отличается от Partha: если товара меньше, это недостача, если больше — излишек.',
+    tg: 'Фарқият ин аст, ки ҳисоб аз Partha чӣ қадар фарқ мекунад: моли камтар камомад аст, моли бештар барзиёдӣ.',
+  },
+  'blind-count': {
+    en: 'In a blind count, the person who counts does not see how many goods Partha expects, so they write what they really see.',
+    ru: 'При слепом подсчёте тот, кто считает, не видит, сколько товара ожидает Partha, и записывает то, что видит на самом деле.',
+    tg: 'Дар ҳисоби пӯшида касе, ки ҳисоб мекунад, намебинад, ки Partha чӣ қадар интизор аст, ва он чиро менависад, ки воқеан мебинад.',
+  },
+  recount: {
+    en: 'A recount is counting a product again, by another person, when the first number looks wrong.',
+    ru: 'Пересчёт — это когда другой человек заново считает товар, потому что первое число вызывает сомнения.',
+    tg: 'Ҳисоби такрорӣ ин аст, ки шахси дигар молро аз нав ҳисоб мекунад, вақте рақами аввал шубҳанок менамояд.',
+  },
 }
 
 export const glossaryLink: Record<GlossaryLang, string> = {
