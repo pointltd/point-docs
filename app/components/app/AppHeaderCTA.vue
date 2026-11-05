@@ -15,4 +15,6 @@ const href = computed(() => `${appUrl}${paths[locale.value] ?? paths.en}`)
   <!-- Full button from small tablets up; on a phone only the icon, so the header still fits. -->
   <UButton :to="href" :label="label" trailing-icon="i-lucide-arrow-up-right" color="neutral" variant="outline" size="sm" class="hidden sm:inline-flex" />
   <UButton :to="href" :aria-label="label" icon="i-lucide-arrow-up-right" color="neutral" variant="ghost" class="sm:hidden" />
+  <!-- The cookie banner has no place of its own in Docus: the header is the one part that is always hydrated. -->
+  <AppConsentBanner />
 </template>

@@ -111,6 +111,9 @@ jobs:
           target: prod
           platforms: linux/amd64
           push: true
+          # Google Analytics 4, property "Partha", web stream docs.partha.co (a public id, not a secret).
+          build-args: |
+            NUXT_PUBLIC_GA_ID=G-9083MT253F
           tags: ${{ vars.GCP_REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ env.IMAGE_REPO }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
