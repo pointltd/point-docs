@@ -16,6 +16,13 @@ export default defineNuxtConfig({
     },
   },
   css: ['~/assets/css/main.css'],
+  // Where "Open Partha" in the header leads (app/components/app/AppHeaderCTA.vue). Set NUXT_PUBLIC_APP_URL for another
+  // market's app.
+  runtimeConfig: {
+    public: {
+      appUrl: process.env.NUXT_PUBLIC_APP_URL || 'https://partha.co',
+    },
+  },
   modules: ['@nuxtjs/i18n'],
   i18n: {
     defaultLocale: 'en',
