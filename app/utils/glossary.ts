@@ -42,12 +42,12 @@ export const glossary: Record<string, Record<GlossaryLang, string>> = {
   difference: {
     en: 'A difference is how much a count differs from Partha: fewer goods is a shortage, more goods is a surplus.',
     ru: 'Расхождение — это насколько подсчёт отличается от Partha: если товара меньше, это недостача, если больше — излишек.',
-    tg: 'Фарқият ин аст, ки ҳисоб аз Partha чӣ қадар фарқ мекунад: моли камтар камомад аст, моли бештар барзиёдӣ.',
+    tg: 'Фарқ ин аст, ки ҳисоб аз Partha чӣ қадар фарқ мекунад: моли камтар камбуд аст, моли бештар изофа.',
   },
   'blind-count': {
     en: 'In a blind count, the person who counts does not see how many goods Partha expects, so they write what they really see.',
     ru: 'При слепом подсчёте тот, кто считает, не видит, сколько товара ожидает Partha, и записывает то, что видит на самом деле.',
-    tg: 'Дар ҳисоби пӯшида касе, ки ҳисоб мекунад, намебинад, ки Partha чӣ қадар интизор аст, ва он чиро менависад, ки воқеан мебинад.',
+    tg: 'Дар ҳисоби нобино касе, ки ҳисоб мекунад, намебинад, ки Partha чӣ қадар интизор аст, ва он чиро менависад, ки воқеан мебинад.',
   },
   recount: {
     en: 'A recount is counting a product again, by another person, when the first number looks wrong.',
