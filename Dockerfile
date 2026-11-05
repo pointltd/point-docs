@@ -12,6 +12,9 @@ COPY patches ./patches
 RUN pnpm install --frozen-lockfile
 COPY . .
 ENV NODE_ENV=production
+# The Google Analytics measurement id of the docs (a public id). Empty = no analytics and no cookie banner.
+ARG NUXT_PUBLIC_GA_ID=
+ENV NUXT_PUBLIC_GA_ID=${NUXT_PUBLIC_GA_ID}
 RUN pnpm run generate
 
 FROM ${NGINX_IMAGE} AS prod

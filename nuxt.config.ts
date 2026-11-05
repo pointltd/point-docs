@@ -21,6 +21,10 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       appUrl: process.env.NUXT_PUBLIC_APP_URL || 'https://partha.co',
+      // Google Analytics 4 measurement id of the docs stream (G-XXXXXXXXXX). The docs are static files, so it is read when
+      // the site is built (NUXT_PUBLIC_GA_ID, set in the Dockerfile and the deploy workflow). Empty = no analytics and no
+      // cookie banner.
+      gaId: process.env.NUXT_PUBLIC_GA_ID || '',
     },
   },
   modules: ['@nuxtjs/i18n'],
