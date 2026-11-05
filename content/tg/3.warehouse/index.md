@@ -65,7 +65,7 @@ navigation:
   ::card
   ---
   icon: i-lucide-list-checks
-  title: Молро ба ҳисоб гиред
+  title: Моли худро шуморед
   to: /tg/warehouse/stock-count
   ---
   Моли воқеан дар рафҳо бударо ҳисоб кунед, бо Partha муқоиса кунед ва бақияро дуруст кунед.
