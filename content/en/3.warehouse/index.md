@@ -61,4 +61,13 @@ Everything about your goods, from the day they arrive to the day they leave.
   ---
   See what you have at a point, what is running low, and what your stock is worth.
   ::
+
+  ::card
+  ---
+  icon: i-lucide-list-checks
+  title: Count your stock
+  to: /en/warehouse/stock-count
+  ---
+  Count what is really on your shelves, compare it with Partha and correct your stock.
+  ::
 ::
