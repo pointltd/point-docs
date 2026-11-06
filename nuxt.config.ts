@@ -15,6 +15,8 @@ export default defineNuxtConfig({
       ],
     },
   },
+  // The share pictures are our own (public/og, see app/plugins/share-image.ts), not the generated ones.
+  ogImage: { enabled: false },
   css: ['~/assets/css/main.css'],
   // Where "Open Partha" in the header leads (app/components/app/AppHeaderCTA.vue). Set NUXT_PUBLIC_APP_URL for another
   // market's app.
