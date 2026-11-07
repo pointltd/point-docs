@@ -82,3 +82,88 @@ index 0000000000000000000000000000000000000000..b6069dc13915fa99e7203c9d237ef83e
 +    }
 +  }
 +}
+diff --git a/app/components/docs/DocsAsideLeftBody.vue b/app/components/docs/DocsAsideLeftBody.vue
+index 2bde7cf..736a8ba 100644
+--- a/app/components/docs/DocsAsideLeftBody.vue
++++ b/app/components/docs/DocsAsideLeftBody.vue
+@@ -1,7 +1,26 @@
+ <script setup lang="ts">
++import type { ContentNavigationItem } from '@nuxt/content'
++
++type NavigationItem = ContentNavigationItem & {
++  exact?: boolean
++  children?: NavigationItem[]
++}
++
+ const { sidebarNavigation } = useSubNavigation()
+ 
+ const contentNavVariants = useUIConfig('contentNavigation')
++
++const exactSidebarNavigation = computed<NavigationItem[]>(() => {
++  const markExact = (items: ContentNavigationItem[] = []): NavigationItem[] => {
++    return items.map((item) => ({
++      ...item,
++      exact: true,
++      children: item.children?.length ? markExact(item.children) : undefined,
++    }))
++  }
++
++  return markExact(sidebarNavigation.value || [])
++})
+ </script>
+ 
+ <template>
+@@ -11,6 +30,6 @@ const contentNavVariants = useUIConfig('contentNavigation')
+     :highlight-color="contentNavVariants.highlightColor"
+     :variant="contentNavVariants.variant ?? 'link'"
+     :color="contentNavVariants.color"
+-    :navigation="sidebarNavigation"
++    :navigation="exactSidebarNavigation"
+   />
+ </template>
+diff --git a/app/components/docs/DocsAsideMobileBar.vue b/app/components/docs/DocsAsideMobileBar.vue
+index eb31b2f..ece6bd8 100644
+--- a/app/components/docs/DocsAsideMobileBar.vue
++++ b/app/components/docs/DocsAsideMobileBar.vue
+@@ -1,7 +1,13 @@
+ <script setup lang="ts">
+ import { useSubNavigation } from '../../composables/useSubNavigation'
++import type { ContentNavigationItem } from '@nuxt/content'
+ import type { ContentTocLink } from '@nuxt/ui'
+ 
++type NavigationItem = ContentNavigationItem & {
++  exact?: boolean
++  children?: NavigationItem[]
++}
++
+ defineProps<{
+   links?: ContentTocLink[]
+ }>()
+@@ -12,6 +18,18 @@ const { t } = useDocusI18n()
+ const contentNavVariants = useUIConfig('contentNavigation')
+ const contentTocVariants = useUIConfig('contentToc')
+ 
++const exactSidebarNavigation = computed<NavigationItem[]>(() => {
++  const markExact = (items: ContentNavigationItem[] = []): NavigationItem[] => {
++    return items.map((item) => ({
++      ...item,
++      exact: true,
++      children: item.children?.length ? markExact(item.children) : undefined,
++    }))
++  }
++
++  return markExact(sidebarNavigation.value || [])
++})
++
+ const menuDrawerOpen = ref(false)
+ const tocDrawerOpen = ref(false)
+ </script>
+@@ -40,7 +58,7 @@ const tocDrawerOpen = ref(false)
+ 
+       <template #body>
+         <UContentNavigation
+-          :navigation="sidebarNavigation"
++          :navigation="exactSidebarNavigation"
+           :highlight="contentNavVariants.highlight ?? true"
+           :highlight-color="contentNavVariants.highlightColor"
+           :variant="contentNavVariants.variant ?? 'link'"
