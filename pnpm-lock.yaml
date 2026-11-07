@@ -163,7 +163,7 @@ settings:
   excludeLinksFromLockfile: false
 
 patchedDependencies:
-  docus: 7877fdbc544f9466479cd00a41af8121eaa6859b94f294f08800553defa6ed35
+  docus: be540800d59f86e4501eedeab0d9b24ccb2e17f52dd89d57135d6af7ae8e77e7
 
 importers:
 
@@ -174,7 +174,7 @@ importers:
         version: 12.11.1
       docus:
         specifier: latest
-        version: 5.15.0(patch_hash=7877fdbc544f9466479cd00a41af8121eaa6859b94f294f08800553defa6ed35)(c5b96e98f956b004a35a76195e0a5547)
+        version: 5.15.0(patch_hash=be540800d59f86e4501eedeab0d9b24ccb2e17f52dd89d57135d6af7ae8e77e7)(c5b96e98f956b004a35a76195e0a5547)
       nuxt:
         specifier: ^4.4.8
         version: 4.6.3(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7(supports-color@10.2.2)))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7(supports-color@10.2.2)))(@oxc-project/types@0.156.0)(@types/node@26.6.6)(@vue/compiler-sfc@3.5.44)(acorn@8.19.0)(better-sqlite3@12.11.1)(confbox@0.2.4)(db0@0.3.4(better-sqlite3@12.11.1))(dotenv@17.4.2)(esbuild@0.28.2)(giget@3.3.1)(ioredis@5.11.1(supports-color@10.2.2))(lightningcss@1.33.0)(mlly@1.8.2)(oxc-parser@0.151.0)(rolldown@1.2.16)(rollup-plugin-visualizer@7.1.1(rolldown@1.2.16)(rollup@4.67.4))(rollup@4.67.4)(srvx@1.0.8)(supports-color@10.2.2)(terser@5.51.2)(typescript@5.9.3)(vite@8.3.5(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(yaml@2.9.1)
@@ -10598,7 +10598,7 @@ snapshots:
 
   diff@9.0.0: {}
 
-  docus@5.15.0(patch_hash=7877fdbc544f9466479cd00a41af8121eaa6859b94f294f08800553defa6ed35)(c5b96e98f956b004a35a76195e0a5547):
+  docus@5.15.0(patch_hash=be540800d59f86e4501eedeab0d9b24ccb2e17f52dd89d57135d6af7ae8e77e7)(c5b96e98f956b004a35a76195e0a5547):
     dependencies:
       '@ai-sdk/gateway': 4.0.132(zod@4.6.7)
       '@ai-sdk/mcp': 2.0.88(zod@4.6.7)
