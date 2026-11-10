@@ -254,4 +254,6 @@ them as described when you work on them.
 - New terms are in the glossary, and a user-visible release has a "What's new" entry.
 - Button and screen names match the app in each language.
 - A reader with no special knowledge could do the task using only this page.
-- Screenshots match the current app.
+- Screenshots match the current app and follow the screenshot rule in "Making pages look good": real screens from
+  the demo business, light and dark, twice the pixel density, lossless, cropped, sharp on the built page. Never a
+  mock-up, a blurry or upscaled image, or a screenshot with real customer data.
