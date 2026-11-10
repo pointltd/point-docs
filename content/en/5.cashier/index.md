@@ -70,4 +70,32 @@ Everything you do at the till, in the order of a working day.
   ---
   Count the cash at the end of the day, see if anything is missing and close the shift.
   ::
+
+  ::card
+  ---
+  icon: i-lucide-wifi-off
+  title: Sell without internet
+  to: /en/cashier/sell-without-internet
+  ---
+  The Windows till keeps selling when the internet is down, and sends the sales to Partha when it is back.
+  ::
+
+  ::card
+  ---
+  icon: i-lucide-circle-alert
+  title: Check problem sales
+  to: /en/cashier/problem-sales
+  ---
+  See the sales from the tills that Partha added but that need a look, and mark them resolved.
+  ::
+
+  ::card
+  ---
+  icon: i-lucide-replace
+  title: Remove or replace a till
+  to: /en/cashier/remove-or-replace-a-till
+  ---
+  Remove a till without losing its sales, close it out, and add the same computer again as a new till.
+  ::
+
 ::

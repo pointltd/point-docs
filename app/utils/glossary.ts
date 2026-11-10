@@ -34,6 +34,11 @@ export const glossary: Record<string, Record<GlossaryLang, string>> = {
     ru: 'Смена — это ваше рабочее время на кассе: вы открываете её с наличными в кассе и закрываете, пересчитав наличные.',
     tg: 'Навбати корӣ — вақти кори шумо дар касса: шумо онро бо пули дар қуттӣ буда мекушоед ва бо шумурдани пул мебандед.',
   },
+  'business-day': {
+    en: 'The business day of a sale is the day it counts on in your reports: the day it was sold, in the time zone of the point.',
+    ru: 'Учётный день продажи — день, за который она учитывается в отчётах: день продажи по часовому поясу точки.',
+    tg: 'Рӯзи ҳисобии фурӯш — рӯзест, ки он дар ҳисоботҳо ҳисоб мешавад: рӯзи фурӯш аз рӯи минтақаи вақти нуқта.',
+  },
   'stock-count': {
     en: 'A stock count is when you count the goods that are really at a point and compare them with what Partha has.',
     ru: 'Инвентаризация — это когда вы пересчитываете товар, который на самом деле есть в точке, и сравниваете с тем, что записано в Partha.',
