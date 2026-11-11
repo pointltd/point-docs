@@ -37,6 +37,15 @@ Everything about your goods, from the day they arrive to the day they leave.
 
   ::card
   ---
+  icon: i-lucide-hand-coins
+  title: Pay your suppliers
+  to: /en/warehouse/pay-suppliers
+  ---
+  See what you owe each supplier, record payments and see which payments are late.
+  ::
+
+  ::card
+  ---
   icon: i-lucide-arrow-left-right
   title: Move goods between points
   to: /en/warehouse/move-goods

@@ -29,6 +29,16 @@ export const glossary: Record<string, Record<GlossaryLang, string>> = {
     ru: 'Себестоимость — это сколько товар обошёлся вам, например цена, которую вы заплатили поставщику. По ней Partha показывает вашу прибыль.',
     tg: 'Таннарх — ин ҳамон аст, ки мол ба шумо чанд пул афтод, масалан нархе, ки ба таъминкунанда додаед. Partha аз рӯи он фоидаи шуморо нишон медиҳад.',
   },
+  debt: {
+    en: 'A debt is money you owe a supplier for goods you received. It goes down with each payment you record.',
+    ru: 'Долг — это деньги, которые вы должны поставщику за полученный товар. Он уменьшается с каждой записанной оплатой.',
+    tg: 'Қарз — пулест, ки барои моли гирифташуда ба таъминкунанда қарздоред. Он бо ҳар пардохти сабтшуда кам мешавад.',
+  },
+  reversal: {
+    en: 'A reversal cancels something already recorded, such as a payment, with a new record. The first record stays in the history, marked as reversed.',
+    ru: 'Отмена убирает уже записанное, например оплату, новой записью. Первая запись остаётся в истории с пометкой «отменена».',
+    tg: 'Бекор кардан чизи аллакай сабтшударо, масалан пардохтро, бо сабти нав бекор мекунад. Сабти аввал дар таърих бо аломати «бекор шуд» мемонад.',
+  },
   shift: {
     en: 'A shift is your working time at the till: you open it with the cash in the drawer and close it with the cash counted.',
     ru: 'Смена — это ваше рабочее время на кассе: вы открываете её с наличными в кассе и закрываете, пересчитав наличные.',
