@@ -37,6 +37,15 @@ navigation:
 
   ::card
   ---
+  icon: i-lucide-hand-coins
+  title: Ба таъминкунандагон пардохт кунед
+  to: /tg/warehouse/pay-suppliers
+  ---
+  Бинед, ки ба ҳар таъминкунанда чӣ қадар қарздоред, пардохтҳоро сабт кунед ва бинед, ки кадомашон дер мондааст.
+  ::
+
+  ::card
+  ---
   icon: i-lucide-arrow-left-right
   title: Молро байни нуқтаҳо интиқол диҳед
   to: /tg/warehouse/move-goods
