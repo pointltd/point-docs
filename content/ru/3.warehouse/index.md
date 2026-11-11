@@ -37,6 +37,15 @@ navigation:
 
   ::card
   ---
+  icon: i-lucide-hand-coins
+  title: Оплатите поставщикам
+  to: /ru/warehouse/pay-suppliers
+  ---
+  Смотрите, сколько вы должны каждому поставщику, записывайте оплаты и следите за просрочками.
+  ::
+
+  ::card
+  ---
   icon: i-lucide-arrow-left-right
   title: Переместите товар между точками
   to: /ru/warehouse/move-goods
