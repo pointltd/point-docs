@@ -1,6 +1,6 @@
 ---
 title: "Cash desk: shifts, sales and receipts"
-description: "Open a shift, make a sale, take payment, print a receipt, refund a receipt and close the shift. Install the Windows till app."
+description: "Open a shift, make a sale, take payment, print a receipt, refund a receipt, put cash in or take it out, and close the shift. Install the Windows till app."
 navigation:
   icon: i-lucide-wallet
 ---
@@ -60,6 +60,15 @@ Everything you do at the till, in the order of a working day.
   to: /en/cashier/refund
   ---
   Return the money for a whole receipt, and put the products back in stock.
+  ::
+
+  ::card
+  ---
+  icon: i-lucide-arrow-left-right
+  title: Put cash in or take cash out
+  to: /en/cashier/cash-in-and-out
+  ---
+  Record cash you put into the drawer or take out of it, and undo an entry made by mistake.
   ::
 
   ::card
