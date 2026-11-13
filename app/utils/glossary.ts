@@ -44,6 +44,16 @@ export const glossary: Record<string, Record<GlossaryLang, string>> = {
     ru: 'Смена — это ваше рабочее время на кассе: вы открываете её с наличными в кассе и закрываете, пересчитав наличные.',
     tg: 'Навбати корӣ — вақти кори шумо дар касса: шумо онро бо пули дар қуттӣ буда мекушоед ва бо шумурдани пул мебандед.',
   },
+  'cash-movement': {
+    en: 'Cash in and out is cash that goes into the drawer or leaves it without a sale or a refund: a cash in, a pay out or a cash drop.',
+    ru: 'Внесения и изъятия — это деньги, которые кладут в кассу или берут из неё не при продаже и не при возврате: внесение, выплата или изъятие.',
+    tg: 'Ворид ва баровардани пул — пулест, ки на ҳангоми фурӯш ва на ҳангоми баргардонидан ба касса гузошта ё аз он гирифта мешавад: ворид кардани пул, пардохт аз касса ё баровардани пул.',
+  },
+  'over-short': {
+    en: 'Over or short is the difference between the cash you count at the close and the cash that should be in the drawer: more is over, less is short.',
+    ru: 'Излишек или недостача — разница между наличными, которые вы пересчитали при закрытии, и суммой, которая должна быть в кассе: больше — излишек, меньше — недостача.',
+    tg: 'Зиёдатӣ ё камбуд — фарқи байни пули ҳангоми бастан шумурдашуда ва маблағест, ки бояд дар касса бошад: зиёд бошад — зиёдатӣ, кам бошад — камбуд.',
+  },
   'business-day': {
     en: 'The business day of a sale is the day it counts on in your reports: the day it was sold, in the time zone of the point.',
     ru: 'Учётный день продажи — день, за который она учитывается в отчётах: день продажи по часовому поясу точки.',
