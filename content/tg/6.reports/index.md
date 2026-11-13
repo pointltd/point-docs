@@ -10,6 +10,33 @@ navigation:
 ::card-group
   ::card
   ---
+  icon: i-lucide-receipt
+  title: Фурӯши худро бинед
+  to: /tg/reports/sales
+  ---
+  Ҳамаи чекҳо, ҷамъҳо, фурӯш аз рӯи рӯз ва кассир, ва навбатҳои корӣ.
+  ::
+
+  ::card
+  ---
+  icon: i-lucide-wallet
+  title: Ҳисоботи рӯзонаи касса
+  to: /tg/reports/cash-report
+  ---
+  Дар як рӯз дар ҳамаи кассаҳо чӣ қадар пул бояд бошад, чӣ қадар шумурда шуд ва оё зиёдатӣ ё камбуд ҳаст.
+  ::
+
+  ::card
+  ---
+  icon: i-lucide-list-checks
+  title: Навбатҳои кории кушодаро идора кунед
+  to: /tg/reports/open-shifts
+  ---
+  Сабти хатои пулро бекор кунед ва навбатеро, ки кассир кушода мондааст, бибандед.
+  ::
+
+  ::card
+  ---
   icon: i-lucide-coins
   title: Фоидаи худро бинед
   to: /tg/reports/profit

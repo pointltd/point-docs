@@ -10,6 +10,33 @@ navigation:
 ::card-group
   ::card
   ---
+  icon: i-lucide-receipt
+  title: Посмотрите свои продажи
+  to: /ru/reports/sales
+  ---
+  Все чеки, итоги, продажи по дням и по кассирам, и смены.
+  ::
+
+  ::card
+  ---
+  icon: i-lucide-wallet
+  title: Кассовый отчёт за день
+  to: /ru/reports/cash-report
+  ---
+  Сколько денег должно быть во всех кассах за день, сколько насчитали, и есть ли излишек или недостача.
+  ::
+
+  ::card
+  ---
+  icon: i-lucide-list-checks
+  title: Управляйте открытыми сменами
+  to: /ru/reports/open-shifts
+  ---
+  Отмените ошибочную запись о деньгах и закройте смену, которую кассир оставил открытой.
+  ::
+
+  ::card
+  ---
   icon: i-lucide-coins
   title: Посмотрите свою прибыль
   to: /ru/reports/profit

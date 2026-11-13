@@ -10,6 +10,33 @@ The money questions in one place.
 ::card-group
   ::card
   ---
+  icon: i-lucide-receipt
+  title: See your sales
+  to: /en/reports/sales
+  ---
+  See every receipt, the totals, the sales by day and by cashier, and the shifts.
+  ::
+
+  ::card
+  ---
+  icon: i-lucide-wallet
+  title: Read the daily cash report
+  to: /en/reports/cash-report
+  ---
+  See the cash that should be in all the drawers of a day, what was counted, and if it is over or short.
+  ::
+
+  ::card
+  ---
+  icon: i-lucide-list-checks
+  title: Manage open shifts
+  to: /en/reports/open-shifts
+  ---
+  Undo a cash entry made by mistake, and close a shift a cashier left open.
+  ::
+
+  ::card
+  ---
   icon: i-lucide-coins
   title: See your profit
   to: /en/reports/profit
