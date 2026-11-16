@@ -248,6 +248,23 @@ them as described when you work on them.
   staff, sales over a few weeks), one per market so currency and taxes look right. It is the only source for
   screenshots, and new users can open it to try Partha without risk to their own data.
 
+## Release gate
+
+Nothing deploys without a local gate pass. From a clean, pushed tree run:
+
+```bash
+node scripts/gate.mjs        # or: pnpm gate
+```
+
+It runs the install, `pnpm check --build --app-links`, the script tests and the Terraform checks, then posts the
+`local-gate` status that the deploy workflow requires. Details are in the README ("Release gate").
+
+- `--urgent` runs a shorter list. Use it only when the user says the word "urgent". Right after an urgent release, run
+  the full gate on the same tree and report the result.
+- Report the measured gate time. If it grows past about 30 minutes, raise it with the user.
+- The honest limit: this repo is on GitHub Free, so the gate guards against mistakes, not against a malicious writer who
+  edits the workflow.
+
 ## Before you finish
 
 - The page exists in `en`, `ru` and `tg` with the same slug, and `pnpm generate` builds without errors or broken links.
