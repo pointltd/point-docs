@@ -37,3 +37,6 @@ logs
 
 # Terraform
 .terraform/
+
+# Release gate result
+.gate/

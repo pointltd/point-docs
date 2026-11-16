@@ -22,8 +22,35 @@ env:
   IMAGE_NAME: docs
 
 jobs:
-  # The check jobs below (docs image build, terraform check) are switched off; only the deploy runs.
-  # The image build runs the site build, so a pull request that breaks the docs fails here.
+  # Fails closed unless the user's local gate (node scripts/gate.mjs) posted a pass for this tree (see README, "Release gate").
+  gate-check:
+    name: Release gate pass
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      statuses: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check the gate pass
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+          GATE_LOGIN: tu-bob
+        run: node scripts/gate-check.mjs
+
+  # The docs checks run on hosted runners: free on this public repo.
+  check:
+    name: Docs checks
+    uses: ./.github/workflows/checks.yaml
+    permissions:
+      contents: read
+    secrets: inherit
+
+  # The jobs below (docs image build, terraform check) are switched off; the gate and the docs checks cover them.
   # check-image:
   #   name: Build image
   #   if: github.event_name == 'pull_request'
@@ -51,7 +78,7 @@ jobs:
 
   #     - uses: hashicorp/setup-terraform@v3
   #       with:
-  #         terraform_version: "1.9.8"
+  #         terraform_version: "1.17.2"
 
   #     - name: Terraform Format
   #       run: terraform fmt -check -recursive -no-color
@@ -68,7 +95,7 @@ jobs:
   deploy:
     name: Deploy to prod
     # Push to main and the manual "Run workflow" button deploy; pull requests never do.
-    # needs: [check-terraform]
+    needs: [gate-check, check]
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment: prod
@@ -120,7 +147,7 @@ jobs:
 
       - uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: "1.9.8"
+          terraform_version: "1.17.2"
 
       - name: Terraform Init
         run: terraform init -input=false -no-color -backend-config="bucket=${GCP_PROJECT_ID}-tfstate"

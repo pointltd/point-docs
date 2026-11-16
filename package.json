@@ -6,7 +6,8 @@
     "build": "nuxt build",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "check": "node scripts/check.mjs"
+    "check": "node scripts/check.mjs",
+    "gate": "node scripts/gate.mjs"
   },
   "dependencies": {
     "docus": "latest",
