@@ -1,17 +1,19 @@
 ---
 name: Docs checks
 
-# Switched off on pull requests to save Actions minutes: run the docs checks locally. Run by hand from the Actions tab when needed.
+# Runs on every pull request (this repo is public, so hosted runs cost nothing), on the deploy workflow before a release,
+# and by hand from the Actions tab.
 on:
-  # pull_request:
+  pull_request:
+  workflow_call:
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
-  cancel-in-progress: true
+  group: docs-checks-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   # Missing translations, broken links and images, incomplete front matter, and pages that fail to prerender.

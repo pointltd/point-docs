@@ -31,7 +31,8 @@ pnpm check --app-links path/to/docs-links.json      # also check the paths the a
 `["warehouse/add-items", "business/add-point#apps"]`, or a map of names to such paths (the app's
 `docs-links.json`), and checks each one (and its anchor) in all three languages.
 
-CI runs `pnpm check --build` on every pull request (`.github/workflows/checks.yaml`). It also downloads the app's
+CI runs `pnpm check --build` on every pull request, on hosted runners (free, this repo is public;
+`.github/workflows/checks.yaml`). It also downloads the app's
 list of docs links (`src/layers/base/app/docs-links.json` on `main` in `pointltd/partha-js`) and checks it, so a PR
 here cannot rename or remove a page the app links to. `partha-js` is private, so this needs the repository secret
 `PARTHA_JS_READ_TOKEN`: a fine-grained token with read-only **Contents** access to `pointltd/partha-js` only. Without
@@ -43,6 +44,32 @@ is checked in `partha-js`: its unit tests check every linked path against a chec
 The site is a static build served by nginx on Cloud Run (Google Cloud, project `point-prod`).
 A push to `main` builds the image, pushes it to Artifact Registry and applies `infrastructure/terraform/gcp/prod`
 (the Cloud Run service and the `docs.partha.co` domain mapping). See `.github/workflows/deploy.yaml`.
+
+### Release gate
+
+Before a merge to `main`, run the local gate on the pull request head (a clean, pushed tree):
+
+```bash
+node scripts/gate.mjs            # or: pnpm gate
+```
+
+It installs, runs `pnpm check --build --app-links` against the app's link list in `../partha-js`, the script tests and
+the Terraform format and validate checks. If all pass it posts a `local-gate` commit status on the pushed commit,
+keyed by the tree hash. The deploy workflow has a first job, `gate-check`, that stops the release unless that pass
+exists for the tree it is about to deploy, and the hosted `check` job must pass too. A later failed gate run on the
+same commit posts `failure`, which revokes the earlier pass. If `main` moved after the pull request was checked,
+run the gate again on `main` and re-run the workflow. `--urgent` runs a shorter list and is only for an urgent fix
+(see `CLAUDE.md`).
+
+When the script cannot run (for example the very first gate-enabled merge, when the check itself is what is being
+introduced), post the status by hand from the account that owns the gate login:
+
+```bash
+gh api -X POST repos/pointltd/point-docs/statuses/<sha> -f state=success -f context=local-gate -f description="v1 tree=<tree> mode=full"
+```
+
+`<tree>` is `git rev-parse <sha>^{tree}`. Post it only for a tree on which you ran the checks yourself; the status
+is a record of that, not a way around it.
 
 The platform pieces it needs (runtime service account, deploy rights, DNS zone) live in `partha-global-ops`.
 The `prod` environment of this repo needs the variables `GCP_PROJECT_ID`, `GCP_REGION`, `GCP_WIF_PROVIDER` and
