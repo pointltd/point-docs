@@ -101,7 +101,7 @@ test('a failing step posts one failure and stops', () => {
   assert.equal(r.posts.length, 1)
   assert.equal(r.posts[0].state, 'failure')
   assert.equal(r.posts[0].repo, 'owner/name')
-  assert.match(r.posts[0].description, /^v1 tree=[0-9a-f]{40} mode=full failed=a-very-long-step-name-that-goes-past-f$/)
+  assert.match(r.posts[0].description, /^v1 tree=[0-9a-f]{40} mode=full failed=a-very-long-step-name-that-goes-past-for$/)
   assert.ok(r.posts[0].description.length <= 140)
   assert.doesNotMatch(r.stdout, /never/)
   assert.equal(JSON.parse(readFileSync(join(work, '.gate', 'last.json'), 'utf8')).result, 'failure')
