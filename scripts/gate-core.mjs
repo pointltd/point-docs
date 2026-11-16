@@ -60,7 +60,7 @@ export function parseArgs(argv) {
 }
 
 function ghPost({ repo, sha, state, description }) {
-  sh('gh', ['api', '-X', 'POST', `repos/${repo}/statuses/${sha}`, '-f', `state=${state}`, '-f', 'context=local-gate', '-f', `description=${description}`])
+  sh('gh', ['api', '--silent', '-X', 'POST', `repos/${repo}/statuses/${sha}`, '-f', `state=${state}`, '-f', 'context=local-gate', '-f', `description=${description}`])
 }
 
 let poster = ghPost
