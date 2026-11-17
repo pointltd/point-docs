@@ -1,9 +1,9 @@
 import assert from 'node:assert/strict'
 import { spawnSync } from 'node:child_process'
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { test } from 'node:test'
+import { after, test } from 'node:test'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { parseArgs, quote, repoFromUrl } from './gate-core.mjs'
 
@@ -16,8 +16,14 @@ function git(cwd, ...args) {
 }
 
 // A work repo whose origin is a bare repo in a local folder. The runner tells the gate which GitHub URL to take it for.
+const made = []
+after(() => {
+  for (const root of made) rmSync(root, { recursive: true, force: true, maxRetries: 3 })
+})
+
 function makeRepo({ pushed = true } = {}) {
   const root = mkdtempSync(join(tmpdir(), 'gate-repo-')).replace(/\\/g, '/')
+  made.push(root)
   const bare = `${root}/origin.git`
   mkdirSync(bare, { recursive: true })
   git(bare, 'init', '--bare', '--initial-branch=main')
