@@ -36,8 +36,9 @@ CI runs `pnpm check --build` on every pull request, on hosted runners (free, thi
 list of docs links (`src/layers/base/app/docs-links.json` on `main` in `pointltd/partha-js`) and checks it, so a PR
 here cannot rename or remove a page the app links to. `partha-js` is private, so this needs the repository secret
 `PARTHA_JS_READ_TOKEN`: a fine-grained token with read-only **Contents** access to `pointltd/partha-js` only. Without
-the secret (for example on a PR from a fork) the step prints a warning and skips this one check. The other direction
-is checked in `partha-js`: its unit tests check every linked path against a checkout of this repo.
+the secret a pull request (for example from a fork) prints a warning and skips this one check; the deploy run and a
+run by hand fail, so a release never goes out with the app's links unchecked. The other direction is checked in
+`partha-js`: its unit tests check every linked path against a checkout of this repo.
 
 ## Deployment
 
