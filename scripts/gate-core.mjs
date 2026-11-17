@@ -1,8 +1,10 @@
 // The local release gate. A repo's gate.mjs lists its steps and calls runGate.
 //
 // runGate refuses a dirty or unpushed tree, runs every step, and then records the result as a `local-gate` commit
-// status on the pushed commit. The deploy workflow reads that status (see gate-check.mjs). There is no way to post a
-// pass without running the steps. A failed run posts `failure`, which revokes an earlier pass on the same commit.
+// status on the pushed commit. The deploy workflow reads that status (see gate-check.mjs) and accepts it only from the
+// owner's account and for the exact tree. That is all it can check: the status is the owner's word that the steps ran,
+// and the owner's `gh` could post the same status by hand. A failed run posts `failure`, which revokes an earlier pass
+// for the tree.
 //
 // This file is copied byte for byte into every repo that has a gate. Change it in one place, then copy it.
 import { spawnSync } from 'node:child_process'
@@ -44,12 +46,28 @@ export function capture(cmd, args = [], opts = {}) {
   return String(spawn(cmd, args, opts, ['ignore', 'pipe', 'inherit']).stdout).trim()
 }
 
-/** The `owner/name` of the origin remote, from an https or ssh URL. */
+/**
+ * The `owner/name` in a GitHub remote URL (https, `git@` or `ssh://git@`), or null. The host is anchored: a URL or path
+ * that only holds `github.com/owner/name` somewhere is another server, and the status must not go by its name.
+ */
+export function repoFromUrl(url) {
+  const match = /^(?:https:\/\/|git@|ssh:\/\/git@)github\.com[:/]([\w.-]+)\/([\w.-]+?)(?:\.git)?\/?$/.exec(url)
+  return match ? `${match[1]}/${match[2]}` : null
+}
+
+let originUrl = () => capture('git', ['remote', 'get-url', 'origin'])
+
+/** Test hook: replaces the function that reads the origin URL (the test repos have a local folder as origin). */
+export function _setOriginUrl(fn) {
+  originUrl = fn
+}
+
+/** The `owner/name` of the origin remote. */
 export function originRepo() {
-  const url = capture('git', ['remote', 'get-url', 'origin'])
-  const match = /github\.com[:/]([\w.-]+)\/([\w.-]+?)(?:\.git)?\/?$/.exec(url)
-  if (!match) throw new Error(`origin is not a GitHub remote: ${url}`)
-  return `${match[1]}/${match[2]}`
+  const url = originUrl()
+  const repo = repoFromUrl(url)
+  if (!repo) throw new Error(`origin is not a GitHub remote: ${url}`)
+  return repo
 }
 
 /**

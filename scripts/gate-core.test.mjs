@@ -5,7 +5,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { test } from 'node:test'
 import { fileURLToPath, pathToFileURL } from 'node:url'
-import { parseArgs, quote } from './gate-core.mjs'
+import { parseArgs, quote, repoFromUrl } from './gate-core.mjs'
 
 const CORE = pathToFileURL(fileURLToPath(new URL('./gate-core.mjs', import.meta.url))).href
 
@@ -15,10 +15,10 @@ function git(cwd, ...args) {
   return r.stdout.trim()
 }
 
-// A work repo whose origin is a bare repo at a path that looks like a GitHub URL, so originRepo() can parse it.
+// A work repo whose origin is a bare repo in a local folder. The runner tells the gate which GitHub URL to take it for.
 function makeRepo({ pushed = true } = {}) {
   const root = mkdtempSync(join(tmpdir(), 'gate-repo-')).replace(/\\/g, '/')
-  const bare = `${root}/github.com/owner/name.git`
+  const bare = `${root}/origin.git`
   mkdirSync(bare, { recursive: true })
   git(bare, 'init', '--bare', '--initial-branch=main')
   const work = `${root}/work`
@@ -43,7 +43,8 @@ function run(work, scenario, args = []) {
   writeFileSync(
     runner,
     `import { appendFileSync, writeFileSync } from 'node:fs'
-import { runGate, _setPoster, parseArgs } from ${JSON.stringify(CORE)}
+import { runGate, _setOriginUrl, _setPoster, parseArgs } from ${JSON.stringify(CORE)}
+_setOriginUrl(() => 'https://github.com/owner/name.git')
 _setPoster((p) => appendFileSync(process.env.POSTS, JSON.stringify(p) + '\\n'))
 const scenarios = {
   ok: [{ name: 'one', run() {} }, { name: 'two', run: async () => {} }],
@@ -84,6 +85,23 @@ test('changedFiles lists names with spaces and non-ASCII letters as they are', (
 test('changedFiles throws when HEAD is already on the base', () => {
   const { work } = makeRepo()
   assert.match(changed(work).error, /already in origin\/main/)
+})
+
+test('repoFromUrl reads https and ssh GitHub remotes', () => {
+  assert.equal(repoFromUrl('https://github.com/owner/name.git'), 'owner/name')
+  assert.equal(repoFromUrl('https://github.com/owner/name'), 'owner/name')
+  assert.equal(repoFromUrl('https://github.com/owner/na.me/'), 'owner/na.me')
+  assert.equal(repoFromUrl('git@github.com:owner/name.git'), 'owner/name')
+  assert.equal(repoFromUrl('ssh://git@github.com/owner/name.git'), 'owner/name')
+})
+
+test('repoFromUrl refuses a remote that only holds github.com in its path or host name', () => {
+  assert.equal(repoFromUrl('C:/tmp/github.com/owner/name.git'), null)
+  assert.equal(repoFromUrl('https://example.com/github.com/owner/name.git'), null)
+  assert.equal(repoFromUrl('https://notgithub.com/owner/name.git'), null)
+  assert.equal(repoFromUrl('https://github.com.example.com/owner/name.git'), null)
+  assert.equal(repoFromUrl('http://github.com/owner/name.git'), null)
+  assert.equal(repoFromUrl('https://github.com/owner/name/extra'), null)
 })
 
 test('quote leaves plain arguments alone and wraps the rest in double quotes', () => {
