@@ -5,7 +5,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { test } from 'node:test'
 import { fileURLToPath, pathToFileURL } from 'node:url'
-import { parseArgs } from './gate-core.mjs'
+import { parseArgs, quote } from './gate-core.mjs'
 
 const CORE = pathToFileURL(fileURLToPath(new URL('./gate-core.mjs', import.meta.url))).href
 
@@ -84,6 +84,20 @@ test('changedFiles lists names with spaces and non-ASCII letters as they are', (
 test('changedFiles throws when HEAD is already on the base', () => {
   const { work } = makeRepo()
   assert.match(changed(work).error, /already in origin\/main/)
+})
+
+test('quote leaves plain arguments alone and wraps the rest in double quotes', () => {
+  assert.equal(quote('--frozen-lockfile'), '--frozen-lockfile')
+  assert.equal(quote('app/utils/money.ts'), 'app/utils/money.ts')
+  assert.equal(quote('app/pages/b/[organization_id]/a b.vue'), '"app/pages/b/[organization_id]/a b.vue"')
+  assert.equal(quote('a&b'), '"a&b"')
+})
+
+test('quote refuses what cmd.exe would change inside double quotes', () => {
+  assert.throws(() => quote('app/%PATH%.ts'), /cannot pass/)
+  assert.throws(() => quote('100%.ts'), /cannot pass/)
+  assert.throws(() => quote('a"b.ts'), /cannot pass/)
+  assert.throws(() => quote('a\nb'), /cannot pass/)
 })
 
 test('parseArgs reads --urgent and other flags', () => {

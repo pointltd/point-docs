@@ -12,13 +12,19 @@ import { join } from 'node:path'
 const WIN = process.platform === 'win32'
 const MAX_DESCRIPTION = 140
 
-function quote(arg) {
-  return /^[\w@%+=:,./\\-]+$/.test(arg) ? arg : `"${arg.replace(/"/g, '\\"')}"`
+/**
+ * One argument for a .cmd file, which Windows runs through cmd.exe. Inside double quotes cmd.exe still expands %NAME%
+ * and has no way to escape a quote, so an argument with either is refused instead of being passed on changed.
+ */
+export function quote(arg) {
+  if (/["%\r\n]/.test(arg)) throw new Error(`cannot pass ${JSON.stringify(arg)} to a .cmd file: it holds a quote, a percent sign or a line break`)
+  return /^[\w@+=:,./\\-]+$/.test(arg) ? arg : `"${arg}"`
 }
 
 function spawn(cmd, args, { cwd, env } = {}, stdio) {
   const options = { cwd, env: env ? { ...process.env, ...env } : process.env, stdio, encoding: 'utf8', maxBuffer: 1 << 28 }
-  // npm and pnpm are .cmd files on Windows, which Node starts only through a shell. The arguments are fixed strings.
+  // npm and pnpm are .cmd files on Windows, which Node starts only through a shell. Most arguments are fixed strings,
+  // but the urgent lists also pass changed file names, so every argument goes through quote.
   const cmdFile = WIN && (cmd === 'pnpm' || cmd === 'npm')
   const result = cmdFile
     ? spawnSync([`${cmd}.cmd`, ...args.map(quote)].join(' '), { ...options, shell: true })
