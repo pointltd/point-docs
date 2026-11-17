@@ -1,11 +1,11 @@
 import assert from 'node:assert/strict'
 import { spawnSync } from 'node:child_process'
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { test } from 'node:test'
+import { after, test } from 'node:test'
 import { fileURLToPath, pathToFileURL } from 'node:url'
-import { parseArgs } from './gate-core.mjs'
+import { parseArgs, quote, repoFromUrl } from './gate-core.mjs'
 
 const CORE = pathToFileURL(fileURLToPath(new URL('./gate-core.mjs', import.meta.url))).href
 
@@ -15,10 +15,16 @@ function git(cwd, ...args) {
   return r.stdout.trim()
 }
 
-// A work repo whose origin is a bare repo at a path that looks like a GitHub URL, so originRepo() can parse it.
+// A work repo whose origin is a bare repo in a local folder. The runner tells the gate which GitHub URL to take it for.
+const made = []
+after(() => {
+  for (const root of made) rmSync(root, { recursive: true, force: true, maxRetries: 3 })
+})
+
 function makeRepo({ pushed = true } = {}) {
   const root = mkdtempSync(join(tmpdir(), 'gate-repo-')).replace(/\\/g, '/')
-  const bare = `${root}/github.com/owner/name.git`
+  made.push(root)
+  const bare = `${root}/origin.git`
   mkdirSync(bare, { recursive: true })
   git(bare, 'init', '--bare', '--initial-branch=main')
   const work = `${root}/work`
@@ -43,7 +49,8 @@ function run(work, scenario, args = []) {
   writeFileSync(
     runner,
     `import { appendFileSync, writeFileSync } from 'node:fs'
-import { runGate, _setPoster, parseArgs } from ${JSON.stringify(CORE)}
+import { runGate, _setOriginUrl, _setPoster, parseArgs } from ${JSON.stringify(CORE)}
+_setOriginUrl(() => 'https://github.com/owner/name.git')
 _setPoster((p) => appendFileSync(process.env.POSTS, JSON.stringify(p) + '\\n'))
 const scenarios = {
   ok: [{ name: 'one', run() {} }, { name: 'two', run: async () => {} }],
@@ -59,6 +66,63 @@ await runGate({ steps: scenarios[process.env.SCENARIO], urgent, extra: process.e
   const list = existsSync(posts) ? readFileSync(posts, 'utf8').trim().split('\n').filter(Boolean).map((l) => JSON.parse(l)) : []
   return { status: r.status, stdout: r.stdout, stderr: r.stderr, posts: list }
 }
+
+// Runs changedFiles('origin/main') in the repo and returns what it gave or the error it threw.
+function changed(work) {
+  const code = [
+    `import { changedFiles } from ${JSON.stringify(CORE)}`,
+    "try { console.log(JSON.stringify({ files: changedFiles('origin/main') })) } catch (e) { console.log(JSON.stringify({ error: e.message })) }",
+  ].join('\n')
+  const r = spawnSync(process.execPath, ['--input-type=module', '-e', code], { cwd: work, encoding: 'utf8' })
+  assert.equal(r.status, 0, r.stderr)
+  return JSON.parse(r.stdout)
+}
+
+test('changedFiles lists names with spaces and non-ASCII letters as they are', () => {
+  const { work } = makeRepo()
+  git(work, 'checkout', '-q', '-b', 'feature')
+  writeFileSync(join(work, 'тест.txt'), 'x\n')
+  writeFileSync(join(work, 'two words.txt'), 'x\n')
+  git(work, 'add', '.')
+  git(work, 'commit', '-m', 'second')
+  assert.deepEqual(changed(work).files.sort(), ['two words.txt', 'тест.txt'])
+})
+
+test('changedFiles throws when HEAD is already on the base', () => {
+  const { work } = makeRepo()
+  assert.match(changed(work).error, /already in origin\/main/)
+})
+
+test('repoFromUrl reads https and ssh GitHub remotes', () => {
+  assert.equal(repoFromUrl('https://github.com/owner/name.git'), 'owner/name')
+  assert.equal(repoFromUrl('https://github.com/owner/name'), 'owner/name')
+  assert.equal(repoFromUrl('https://github.com/owner/na.me/'), 'owner/na.me')
+  assert.equal(repoFromUrl('git@github.com:owner/name.git'), 'owner/name')
+  assert.equal(repoFromUrl('ssh://git@github.com/owner/name.git'), 'owner/name')
+})
+
+test('repoFromUrl refuses a remote that only holds github.com in its path or host name', () => {
+  assert.equal(repoFromUrl('C:/tmp/github.com/owner/name.git'), null)
+  assert.equal(repoFromUrl('https://example.com/github.com/owner/name.git'), null)
+  assert.equal(repoFromUrl('https://notgithub.com/owner/name.git'), null)
+  assert.equal(repoFromUrl('https://github.com.example.com/owner/name.git'), null)
+  assert.equal(repoFromUrl('http://github.com/owner/name.git'), null)
+  assert.equal(repoFromUrl('https://github.com/owner/name/extra'), null)
+})
+
+test('quote leaves plain arguments alone and wraps the rest in double quotes', () => {
+  assert.equal(quote('--frozen-lockfile'), '--frozen-lockfile')
+  assert.equal(quote('app/utils/money.ts'), 'app/utils/money.ts')
+  assert.equal(quote('app/pages/b/[organization_id]/a b.vue'), '"app/pages/b/[organization_id]/a b.vue"')
+  assert.equal(quote('a&b'), '"a&b"')
+})
+
+test('quote refuses what cmd.exe would change inside double quotes', () => {
+  assert.throws(() => quote('app/%PATH%.ts'), /cannot pass/)
+  assert.throws(() => quote('100%.ts'), /cannot pass/)
+  assert.throws(() => quote('a"b.ts'), /cannot pass/)
+  assert.throws(() => quote('a\nb'), /cannot pass/)
+})
 
 test('parseArgs reads --urgent and other flags', () => {
   const a = parseArgs(['node', 'gate.mjs', '--urgent', '--x'])

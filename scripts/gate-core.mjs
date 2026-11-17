@@ -1,8 +1,10 @@
 // The local release gate. A repo's gate.mjs lists its steps and calls runGate.
 //
 // runGate refuses a dirty or unpushed tree, runs every step, and then records the result as a `local-gate` commit
-// status on the pushed commit. The deploy workflow reads that status (see gate-check.mjs). There is no way to post a
-// pass without running the steps. A failed run posts `failure`, which revokes an earlier pass on the same commit.
+// status on the pushed commit. The deploy workflow reads that status (see gate-check.mjs) and accepts it only from the
+// owner's account and for the exact tree. That is all it can check: the status is the owner's word that the steps ran,
+// and the owner's `gh` could post the same status by hand. A failed run posts `failure`, which revokes an earlier pass
+// for the tree.
 //
 // This file is copied byte for byte into every repo that has a gate. Change it in one place, then copy it.
 import { spawnSync } from 'node:child_process'
@@ -12,13 +14,19 @@ import { join } from 'node:path'
 const WIN = process.platform === 'win32'
 const MAX_DESCRIPTION = 140
 
-function quote(arg) {
-  return /^[\w@%+=:,./\\-]+$/.test(arg) ? arg : `"${arg.replace(/"/g, '\\"')}"`
+/**
+ * One argument for a .cmd file, which Windows runs through cmd.exe. Inside double quotes cmd.exe still expands %NAME%
+ * and has no way to escape a quote, so an argument with either is refused instead of being passed on changed.
+ */
+export function quote(arg) {
+  if (/["%\r\n]/.test(arg)) throw new Error(`cannot pass ${JSON.stringify(arg)} to a .cmd file: it holds a quote, a percent sign or a line break`)
+  return /^[\w@+=:,./\\-]+$/.test(arg) ? arg : `"${arg}"`
 }
 
 function spawn(cmd, args, { cwd, env } = {}, stdio) {
   const options = { cwd, env: env ? { ...process.env, ...env } : process.env, stdio, encoding: 'utf8', maxBuffer: 1 << 28 }
-  // npm and pnpm are .cmd files on Windows, which Node starts only through a shell. The arguments are fixed strings.
+  // npm and pnpm are .cmd files on Windows, which Node starts only through a shell. Most arguments are fixed strings,
+  // but the urgent lists also pass changed file names, so every argument goes through quote.
   const cmdFile = WIN && (cmd === 'pnpm' || cmd === 'npm')
   const result = cmdFile
     ? spawnSync([`${cmd}.cmd`, ...args.map(quote)].join(' '), { ...options, shell: true })
@@ -38,19 +46,43 @@ export function capture(cmd, args = [], opts = {}) {
   return String(spawn(cmd, args, opts, ['ignore', 'pipe', 'inherit']).stdout).trim()
 }
 
-/** The `owner/name` of the origin remote, from an https or ssh URL. */
-export function originRepo() {
-  const url = capture('git', ['remote', 'get-url', 'origin'])
-  const match = /github\.com[:/]([\w.-]+)\/([\w.-]+?)(?:\.git)?\/?$/.exec(url)
-  if (!match) throw new Error(`origin is not a GitHub remote: ${url}`)
-  return `${match[1]}/${match[2]}`
+/**
+ * The `owner/name` in a GitHub remote URL (https, `git@` or `ssh://git@`), or null. The host is anchored: a URL or path
+ * that only holds `github.com/owner/name` somewhere is another server, and the status must not go by its name.
+ */
+export function repoFromUrl(url) {
+  const match = /^(?:https:\/\/|git@|ssh:\/\/git@)github\.com[:/]([\w.-]+)\/([\w.-]+?)(?:\.git)?\/?$/.exec(url)
+  return match ? `${match[1]}/${match[2]}` : null
 }
 
-/** Files changed on this branch since it left `base`. */
+let originUrl = () => capture('git', ['remote', 'get-url', 'origin'])
+
+/** Test hook: replaces the function that reads the origin URL (the test repos have a local folder as origin). */
+export function _setOriginUrl(fn) {
+  originUrl = fn
+}
+
+/** The `owner/name` of the origin remote. */
+export function originRepo() {
+  const url = originUrl()
+  const repo = repoFromUrl(url)
+  if (!repo) throw new Error(`origin is not a GitHub remote: ${url}`)
+  return repo
+}
+
+/**
+ * Files changed on this branch since it left `base`. The urgent lists pick their tests from this, so it must never
+ * come back empty by accident: it throws when HEAD is already in `base` (the diff would be empty and no test would
+ * run), and it reads the names unquoted (git otherwise escapes a name with non-ASCII letters, which then matches no
+ * path filter).
+ */
 export function changedFiles(base = 'origin/main') {
   const from = capture('git', ['merge-base', 'HEAD', base])
-  const out = capture('git', ['diff', '--name-only', from, 'HEAD'])
-  return out ? out.split(/\r?\n/) : []
+  if (from === capture('git', ['rev-parse', 'HEAD'])) {
+    throw new Error(`HEAD is already in ${base}, so there is no branch change to pick tests from; run the full gate`)
+  }
+  const out = capture('git', ['-c', 'core.quotePath=false', 'diff', '--name-only', '-z', from, 'HEAD'])
+  return out.split('\0').filter(Boolean)
 }
 
 /** `--urgent` and any other `--flag` from the command line (pass process.argv). */

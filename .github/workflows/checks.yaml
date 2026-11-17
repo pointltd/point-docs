@@ -21,12 +21,12 @@ jobs:
     name: Check docs
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
 
       # The pnpm version comes from the "packageManager" field in package.json.
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4.3.0
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version-file: .node-version
           cache: pnpm
@@ -37,10 +37,18 @@ jobs:
       - name: Download the app's docs links
         env:
           GH_TOKEN: ${{ secrets.PARTHA_JS_READ_TOKEN }}
+          # When the deploy workflow calls this one, this is the deploy's own event (push or workflow_dispatch).
+          EVENT: ${{ github.event_name }}
         run: |
           if [ -z "$GH_TOKEN" ]; then
-            echo "::warning::PARTHA_JS_READ_TOKEN is not set, so the app's docs links are not checked"
-            exit 0
+            # A pull request from a fork gets no secrets, so there this can only warn. Anywhere else a missing token
+            # would let a release go out with the app's links unchecked.
+            if [ "$EVENT" = "pull_request" ]; then
+              echo "::warning::PARTHA_JS_READ_TOKEN is not set, so the app's docs links are not checked"
+              exit 0
+            fi
+            echo "::error::PARTHA_JS_READ_TOKEN is not set, so the app's docs links cannot be checked. Set the secret (see README, \"Checks\") and run again."
+            exit 1
           fi
           gh api repos/pointltd/partha-js/contents/src/layers/base/app/docs-links.json \
             -H 'Accept: application/vnd.github.raw' > "$RUNNER_TEMP/app-links.json"
