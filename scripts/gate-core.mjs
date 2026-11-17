@@ -46,11 +46,19 @@ export function originRepo() {
   return `${match[1]}/${match[2]}`
 }
 
-/** Files changed on this branch since it left `base`. */
+/**
+ * Files changed on this branch since it left `base`. The urgent lists pick their tests from this, so it must never
+ * come back empty by accident: it throws when HEAD is already in `base` (the diff would be empty and no test would
+ * run), and it reads the names unquoted (git otherwise escapes a name with non-ASCII letters, which then matches no
+ * path filter).
+ */
 export function changedFiles(base = 'origin/main') {
   const from = capture('git', ['merge-base', 'HEAD', base])
-  const out = capture('git', ['diff', '--name-only', from, 'HEAD'])
-  return out ? out.split(/\r?\n/) : []
+  if (from === capture('git', ['rev-parse', 'HEAD'])) {
+    throw new Error(`HEAD is already in ${base}, so there is no branch change to pick tests from; run the full gate`)
+  }
+  const out = capture('git', ['-c', 'core.quotePath=false', 'diff', '--name-only', '-z', from, 'HEAD'])
+  return out.split('\0').filter(Boolean)
 }
 
 /** `--urgent` and any other `--flag` from the command line (pass process.argv). */

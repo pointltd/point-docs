@@ -60,6 +60,32 @@ await runGate({ steps: scenarios[process.env.SCENARIO], urgent, extra: process.e
   return { status: r.status, stdout: r.stdout, stderr: r.stderr, posts: list }
 }
 
+// Runs changedFiles('origin/main') in the repo and returns what it gave or the error it threw.
+function changed(work) {
+  const code = [
+    `import { changedFiles } from ${JSON.stringify(CORE)}`,
+    "try { console.log(JSON.stringify({ files: changedFiles('origin/main') })) } catch (e) { console.log(JSON.stringify({ error: e.message })) }",
+  ].join('\n')
+  const r = spawnSync(process.execPath, ['--input-type=module', '-e', code], { cwd: work, encoding: 'utf8' })
+  assert.equal(r.status, 0, r.stderr)
+  return JSON.parse(r.stdout)
+}
+
+test('changedFiles lists names with spaces and non-ASCII letters as they are', () => {
+  const { work } = makeRepo()
+  git(work, 'checkout', '-q', '-b', 'feature')
+  writeFileSync(join(work, 'тест.txt'), 'x\n')
+  writeFileSync(join(work, 'two words.txt'), 'x\n')
+  git(work, 'add', '.')
+  git(work, 'commit', '-m', 'second')
+  assert.deepEqual(changed(work).files.sort(), ['two words.txt', 'тест.txt'])
+})
+
+test('changedFiles throws when HEAD is already on the base', () => {
+  const { work } = makeRepo()
+  assert.match(changed(work).error, /already in origin\/main/)
+})
+
 test('parseArgs reads --urgent and other flags', () => {
   const a = parseArgs(['node', 'gate.mjs', '--urgent', '--x'])
   assert.equal(a.urgent, true)
