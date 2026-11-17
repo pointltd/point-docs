@@ -12,21 +12,28 @@ const word = (description, key) => new RegExp(`(?:^|\\s)${key}=(\\S+)`).exec(des
 /**
  * Finds a valid pass for the tree of `sha`. The pass may sit on `sha` itself or on the head of a pull request that
  * contains it (a merge commit has the same tree as the head it merged). Only the newest `local-gate` status of a
- * candidate counts, so a later failure revokes an earlier pass.
+ * candidate counts, and the newest of those for this tree decides: a later failure revokes an earlier pass, also when
+ * the two sit on different commits with the same tree (a pass on the PR head, then a failed run on the merge commit).
  */
 export async function findPass({ get, repo, sha, login }) {
   const tree = (await get(`/repos/${repo}/git/commits/${sha}`)).tree.sha
   const pulls = await get(`/repos/${repo}/commits/${sha}/pulls`)
   const candidates = [sha, ...pulls.map((p) => p.head.sha)]
+  const found = []
   for (const candidate of candidates) {
     const statuses = await get(`/repos/${repo}/commits/${candidate}/statuses?per_page=100`)
     const status = statuses.find((s) => s.context === 'local-gate')
-    if (!status) continue
-    if (status.state !== 'success' || status.creator?.login !== login) continue
-    if (word(status.description ?? '', 'tree') !== tree) continue
-    return { sha: candidate, description: status.description, mode: word(status.description, 'mode'), plan: word(status.description, 'plan') }
+    if (!status || word(status.description ?? '', 'tree') !== tree) continue
+    const at = Date.parse(status.created_at)
+    // Without a time the order of a pass and a failure is unknown, and that must not read as a pass.
+    if (Number.isNaN(at)) throw new Error(`the local-gate status on ${candidate} has no readable time`)
+    found.push({ candidate, status, at, ok: status.state === 'success' && status.creator?.login === login })
   }
-  return null
+  const pass = found.filter((f) => f.ok).sort((a, b) => b.at - a.at)[0]
+  // `>=`: the times have one-second steps, so a tie is read as the failure being the later one.
+  if (!pass || found.some((f) => !f.ok && f.at >= pass.at)) return null
+  const { description } = pass.status
+  return { sha: pass.candidate, description, mode: word(description, 'mode'), plan: word(description, 'plan') }
 }
 
 const REASON = 'Run node scripts/gate.mjs on this commit or its PR head, then re-run this workflow.'

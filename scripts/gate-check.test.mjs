@@ -24,7 +24,9 @@ function fakeGet({ statuses = {}, pulls = [], tree = TREE } = {}) {
   }
 }
 
-const status = (over = {}) => ({ context: 'local-gate', state: 'success', creator: { login: LOGIN }, description: `v1 tree=${TREE} mode=full`, ...over })
+const EARLIER = '2026-11-17T10:00:00Z'
+const LATER = '2026-11-17T11:00:00Z'
+const status = (over = {}) => ({ context: 'local-gate', state: 'success', creator: { login: LOGIN }, description: `v1 tree=${TREE} mode=full`, created_at: EARLIER, ...over })
 const find = (get) => findPass({ get, repo: REPO, sha: SHA, login: LOGIN })
 
 test('findPass accepts a matching pass on the pushed sha', async () => {
@@ -57,6 +59,32 @@ test('findPass rejects a tree that only matches as a prefix', async () => {
 test('findPass treats a newer failure as revoking an older pass', async () => {
   const get = fakeGet({ statuses: { [SHA]: [status({ state: 'failure' }), status()] } })
   assert.equal(await find(get), null)
+})
+
+test('findPass treats a newer failure on the merge commit as revoking a pass on the PR head', async () => {
+  const get = fakeGet({ pulls: [HEAD], statuses: { [SHA]: [status({ state: 'failure', created_at: LATER })], [HEAD]: [status()] } })
+  assert.equal(await find(get), null)
+})
+
+test('findPass accepts a pass on the merge commit that is newer than a failure on the PR head', async () => {
+  const get = fakeGet({ pulls: [HEAD], statuses: { [SHA]: [status({ created_at: LATER })], [HEAD]: [status({ state: 'failure' })] } })
+  assert.equal((await find(get)).sha, SHA)
+})
+
+test('findPass reads a failure at the same second as the pass as the later one', async () => {
+  const get = fakeGet({ pulls: [HEAD], statuses: { [SHA]: [status({ state: 'failure' })], [HEAD]: [status()] } })
+  assert.equal(await find(get), null)
+})
+
+test('findPass ignores a failure on a PR head with a different tree', async () => {
+  const other = status({ state: 'failure', created_at: LATER, description: `v1 tree=${'d'.repeat(40)} mode=full failed=x` })
+  const get = fakeGet({ pulls: [HEAD], statuses: { [SHA]: [status()], [HEAD]: [other] } })
+  assert.equal((await find(get)).sha, SHA)
+})
+
+test('findPass fails closed on a status with no readable time', async () => {
+  const get = fakeGet({ statuses: { [SHA]: [status({ created_at: undefined })] } })
+  await assert.rejects(find(get), /no readable time/)
 })
 
 test('findPass ignores other contexts', async () => {
