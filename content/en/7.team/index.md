@@ -43,4 +43,22 @@ Decide who can do what in your business.
   ---
   Sign in at the Windows till as the owner, and let your team sell there with their own PIN.
   ::
+
+  ::card
+  ---
+  icon: i-lucide-scroll-text
+  title: See who changed what
+  to: /en/team/activity-log
+  ---
+  Find out who changed prices, stock documents, settings and access, and when.
+  ::
+
+  ::card
+  ---
+  icon: i-lucide-history
+  title: See the history of a record
+  to: /en/team/record-history
+  ---
+  Open History on a record to see what happened to it.
+  ::
 ::
