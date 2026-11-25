@@ -12,9 +12,18 @@ Everything about your goods, from the day they arrive to the day they leave.
   ---
   icon: i-lucide-package
   title: Add products
-  to: /en/warehouse/add-items
+  to: /en/warehouse/add-products
   ---
-  Add the products you sell or store, so you can receive them, price them and sell them.
+  Add the products you sell, with sizes or colours, barcodes and prices, and receive their first stock.
+  ::
+
+  ::card
+  ---
+  icon: i-lucide-folder-tree
+  title: Organise products in categories
+  to: /en/warehouse/categories
+  ---
+  Group your products so they are easy to find and show as tabs on the till.
   ::
 
   ::card
