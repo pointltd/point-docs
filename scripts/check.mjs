@@ -163,6 +163,8 @@ for (const lang of LANGS) {
   for (const [, { file, text }] of pages[lang]) {
     const where = `content/${lang}/${file}`
     const body = text.replace(/```[\s\S]*?```/g, '').replace(/`[^`\n]*`/g, '')
+    // A page that still has a placeholder would ship without its picture. Fenced or inline code may mention the words.
+    if (body.includes('SCREENSHOT TODO')) report(where, 'still has a SCREENSHOT TODO comment')
     for (const m of body.matchAll(SCREENSHOT)) {
       const src = m[1].match(/\bsrc="([^"]+)"/)?.[1]
       const alt = m[1].match(/\balt="([^"]*)"/)?.[1]

@@ -238,7 +238,8 @@ them as described when you work on them.
   docs, in the reader's language, and link the pages it used.
 - **Automatic checks** *(built: `pnpm check`, see README)*. The build fails when a page exists in one language but not the others, when a link
   or image is broken, or when a path the app links to (from the app's docs-links helper) does not exist in all three
-  languages. Run them in CI for every PR in `point-docs` and `partha-js`.
+  languages. They run in CI for every PR in `point-docs`. `partha-js` has no test workflow on PRs: run its docs-link
+  unit test there by hand. A page that still has a `SCREENSHOT TODO` comment also fails the check.
 - **Screenshot automation** *(built: `partha-js/src/tests/docs-shots`, see its README)*. A Playwright script opens the
   sample businesses on the live app in each language and both themes, at desktop size, and saves the screenshots
   straight into `point-docs/public/images/<lang>/...` under the names the pages use. When a screen changes, rerun the
